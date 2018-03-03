@@ -3,7 +3,7 @@
 CREATE TABLE ADMIN_USER (
   Username varchar(250) NOT NULL,
   Position varchar(100) NOT NULL,
-  PRIMARY KEY Username ()
+  PRIMARY KEY (Username)
 );
 
 CREATE TABLE USER (
@@ -25,7 +25,7 @@ CREATE TABLE ITEM (
   Item_ID int unsigned NOT NULL AUTO_INCREMENT,
   Item_Name varchar(250) NOT NULL,
   Description varchar(1000) NOT NULL,
-  Condition smallint unsigned NOT NULL,
+  Cond smallint unsigned NOT NULL,
   Returnable boolean NOT NULL,
   Auction_Start_Datetime Timestamp NOT NULL,
   Min_Sale_Price Decimal(19,2) NOT NULL,
