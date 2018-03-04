@@ -56,9 +56,11 @@ CREATE TABLE RATING (
   Comment varchar(1000) DEFAULT "",
   PRIMARY KEY (Rating_Datetime, Username, Item_ID),
   FOREIGN KEY (Username) REFERENCES USER (Username),
-  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID)
+  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID),
+  CONSTRAINT Unq_User_Item Unique(Username, Item_ID)
 );
-  
+
+
 INSERT INTO USER
 VALUES
     ('eswinfonrl', 'UAF7nf', 'Etienne', 'Swinfon'),
@@ -128,10 +130,10 @@ VALUES ('2017-03-22 23:34:42', 'darletrq', 1, 4, "asdasasd"),
        ('2017-03-22 23:34:43', 'eswinfonrl', 1, 2, "asdasdasda"),
        ('2017-03-22 23:34:41', 'eswinfonrl', 2, 5, "sadasdas"),
        ('2017-03-22 23:34:42', 'darletrq', 2, 2, "sadasdas"),
-       ('2017-03-22 23:34:43', 'darletrq', 2, 5, "sadasdas"),
-       ('2017-03-22 23:34:45', 'eswinfonrl', 2, 3, "sadasdas"),
-       ('2017-03-22 23:34:46', 'darletrq', 2, 11, "sadasdas"),
+       ('2017-03-22 23:34:43', 'darletrq', 3, 5, "sadasdas"),
+       ('2017-03-22 23:34:45', 'eswinfonrl', 3, 3, "sadasdas"),
+       ('2017-03-22 23:34:46', 'darletrq', 4, 11, "sadasdas"),
        ('2017-03-22 23:34:47', 'clygorr', 2, 1, "sadasdas"),
        ('2017-03-22 23:34:45', 'cgalliennero', 3, 1, "sadasdas"),
-       ('2017-03-22 23:34:46', 'darletrq', 3, 5, "sadasdas"),
-       ('2017-03-22 23:34:47', 'cgalliennero', 3, 2, "sadasdas");
+       ('2017-03-22 23:34:46', 'darletrq', 7, 5, "sadasdas"),
+       ('2017-03-22 23:34:47', 'cgalliennero', 2, 2, "sadasdas");
