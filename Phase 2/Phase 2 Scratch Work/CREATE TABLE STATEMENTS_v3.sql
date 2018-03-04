@@ -34,6 +34,7 @@ CREATE TABLE ITEM (
   Auction_End_Datetime Timestamp NOT NULL,
   Category varchar(100) NOT NULL,
   Lister_Name varchar(250) NOT NULL,
+  Starting_Bid Decimal(19,2) NOT NULL,
   PRIMARY KEY (ITEM_ID),
   FOREIGN KEY (Lister_Name) REFERENCES USER (Username),
   FOREIGN KEY (Category) REFERENCES Category (Category_Name)
