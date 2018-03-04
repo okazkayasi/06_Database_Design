@@ -47,7 +47,8 @@ CREATE TABLE BID (
   Bid_Amount Decimal(19,2) NOT NULL,
   PRIMARY KEY (Bid_Datetime, Username, Item_ID),
   FOREIGN KEY (Username) REFERENCES USER (Username),
-  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID)
+  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID),
+  CONSTRAINT Unq_User_Item Unique(Username, Item_ID)
 );
 
 CREATE TABLE RATING (
@@ -58,7 +59,8 @@ CREATE TABLE RATING (
   Comment varchar(1000) DEFAULT NULL,
   PRIMARY KEY (Rating_Datetime, Username, Item_ID),
   FOREIGN KEY (Username) REFERENCES USER (Username),
-  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID)
+  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID),
+  UNIQUE(Username, Item_ID)
 );
 
 
