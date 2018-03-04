@@ -28,6 +28,7 @@ CREATE TABLE ITEM (
   Cond smallint unsigned NOT NULL,
   Returnable boolean NOT NULL,
   Auction_Start_Datetime Timestamp NOT NULL,
+  Auction_Length NOT NULL,
   Min_Sale_Price Decimal(19,2) NOT NULL,
   Get_It_Now_Price Decimal(19,2) DEFAULT NULL,
   Auction_End_Datetime Timestamp NOT NULL,
@@ -53,9 +54,10 @@ CREATE TABLE RATING (
   Username varchar(250) NOT NULL,
   Item_ID int unsigned NOT NULL,
   Number_Of_Stars smallint NOT NULL,
-  Comment varchar(1000) NOT NULL,
+  Comment varchar(1000) DEFAULT NULL,
   PRIMARY KEY (Rating_Datetime, Username, Item_ID),
   FOREIGN KEY (Username) REFERENCES USER (Username),
   FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID)
 );
+
 
