@@ -1,0 +1,139 @@
+-- Tables 
+
+CREATE TABLE ADMIN_USER (
+  Username varchar(250) NOT NULL,
+  Position varchar(100) NOT NULL,
+  PRIMARY KEY (Username)
+);
+
+CREATE TABLE USER (
+  Username varchar(250) NOT NULL,
+  Password varchar(60) NOT NULL,
+  First_Name varchar(100) NOT NULL,
+  Last_Name varchar(100) NOT NULL,
+  PRIMARY KEY (Username)
+);
+
+
+CREATE TABLE CATEGORY (
+  Category_Name varchar(100) NOT NULL,
+  PRIMARY KEY (Category_Name)
+);
+
+
+CREATE TABLE ITEM (
+  Item_ID int unsigned NOT NULL AUTO_INCREMENT,
+  Item_Name varchar(250) NOT NULL,
+  Description varchar(1000) NOT NULL,
+  Cond smallint unsigned NOT NULL,
+  Returnable boolean DEFAULT 1,
+  Auction_Start_Datetime Timestamp NOT NULL,
+  Min_Sale_Price Decimal(19,2) NOT NULL,
+  Get_It_Now_Price Decimal(19,2) DEFAULT NULL,
+  Auction_End_Datetime Timestamp NOT NULL,
+  Category varchar(100) NOT NULL,
+  Lister_Name varchar(250) NOT NULL,
+  PRIMARY KEY (ITEM_ID),
+  FOREIGN KEY (Lister_Name) REFERENCES USER (Username),
+  FOREIGN KEY (Category) REFERENCES Category (Category_Name)
+);
+
+CREATE TABLE BID (
+  Bid_Datetime timestamp NOT NULL,
+  Username varchar(250) NOT NULL,
+  Item_ID int unsigned NOT NULL,
+  Bid_Amount Decimal(19,2) NOT NULL,
+  PRIMARY KEY (Bid_Datetime, Username, Item_ID),
+  FOREIGN KEY (Username) REFERENCES USER (Username),
+  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID)
+);
+
+CREATE TABLE RATING (
+  Rating_Datetime timestamp NOT NULL,
+  Username varchar(250) NOT NULL,
+  Item_ID int unsigned NOT NULL,
+  Number_Of_Stars smallint NOT NULL,
+  Comment varchar(1000) DEFAULT "",
+  PRIMARY KEY (Rating_Datetime, Username, Item_ID),
+  FOREIGN KEY (Username) REFERENCES USER (Username),
+  FOREIGN KEY (Item_ID) REFERENCES ITEM (Item_ID),
+  CONSTRAINT Unq_User_Item Unique(Username, Item_ID)
+);
+
+
+INSERT INTO USER
+VALUES
+    ('eswinfonrl', 'UAF7nf', 'Etienne', 'Swinfon'),
+    ('bcohanrm', 'MQgwEar2W', 'Brandy', 'Cohan'),
+    ('nfurstrn', 'mfVdmc0', 'Napoleon', 'Furst'),
+    ('cgalliennero', 'PoJE9yjrH', 'Claire', 'Gallienne'),
+    ('bwintonrp', 'tGM6AQN5fXV1', 'Brock', 'Winton'),
+    ('darletrq', 'EfTaFZWE6h', 'Darrell', 'Arlet'),
+    ('clygorr', 'xhGgeHwkG', 'Chelsy', 'Lygo')
+;
+
+INSERT INTO CATEGORY
+VALUES
+    ('Electronic'),
+    ('Appliance'),
+    ('Car'),
+    ('Home');
+    
+INSERT INTO ITEM
+    (`Item_ID`, `Item_Name`, `Description`, `Cond`, `Auction_Start_Datetime`, `Min_Sale_Price`, `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name`)
+VALUES
+    (1, 'Eubalaena australis', 51883763889227931453732059, 1, '2017-03-24 15:15:09', 0503.39, 49361.87, '2018-08-08 13:09:20', 'Car', 'bcohanrm'),
+    (2, 'Otocyon megalotis', 99210768621290615424293371, 1, '2017-07-23 03:23:01', 7245.74, 95951.41, '2018-09-03 06:05:10', 'Car', 'bcohanrm'),
+    (3, 'Ara ararauna', 00102160477216003518214719, 1, '2017-12-07 00:01:38', 5963.16, 43288.53, '2018-03-10 07:59:35', 'Car', 'bcohanrm'),
+    (4, 'Ceratotherium simum', 13970068353927480068886685, 4, '2017-07-22 12:32:30', 9689.62, 43709.80, '2018-06-15 10:46:14', 'Car', 'bcohanrm'),
+    (5, 'Phalacrocorax niger', 93430524126543572714705352, 0, '2018-02-27 08:33:08', 6789.60, 75164.52, '2018-05-02 11:25:28', 'Car', 'bcohanrm'),
+    (6, 'Geococcyx californianus', 64922550105173214380982491, 2, '2017-03-22 23:34:41', 5336.60, 03919.46, '2018-03-22 17:03:22', 'Car', 'cgalliennero'),
+    (7, 'Sceloporus magister', 55997788786587085333197755, 1, '2017-06-06 15:55:39', 3939.27, 45634.59, '2019-01-04 12:05:02', 'Car', 'cgalliennero'),
+    (8, 'Macaca mulatta', 76400585237807289017831371, 1, '2017-08-24 04:11:49', 1133.00, 91661.21, '2017-09-29 00:40:36', 'Car', 'cgalliennero'),
+    (9, 'Macropus eugenii', 70973547324945942854255574, 5, '2017-03-01 14:44:45', 9562.21, 11216.85, '2017-07-12 07:41:10', 'Car', 'cgalliennero'),
+    (10, 'Fregata magnificans', 08378461926595042095972384, 2, '2017-04-07 17:54:05', 4031.48, 97745.75, '2017-05-03 02:09:32', 'Car', 'cgalliennero'),
+    (11, 'Macropus robustus', 00108704944170752900762057, 3, '2017-03-10 10:05:56', 2326.61, 78652.91, '2017-06-16 09:37:37', 'Car', 'darletrq'),
+    (12, 'Oxybelis fulgidus', 38936092298828569142416254, 2, '2017-04-12 15:50:50', 7201.31, 77184.49, '2018-08-01 17:28:04', 'Home', 'cgalliennero'),
+    (13, 'Bubalornis niger', 47043770845414538308430398, 3, '2017-11-23 09:19:52', 2678.13, 24059.31, '2018-06-26 14:19:10', 'Home', 'darletrq'),
+    (14, 'Dacelo novaeguineae', 71636066892689189051438237, 5, '2017-09-05 06:10:47', 2773.58, 52911.85, '2018-06-24 05:43:13', 'Home', 'cgalliennero'),
+    (15, 'Pteropus rufus', 64497094663229404939961218, 1, '2017-03-31 11:21:58', 2936.36, 79685.82, '2018-09-13 00:27:04', 'Home', 'cgalliennero'),
+    (16, 'Tiliqua scincoides', 14509225603887305575478207, 6, '2017-05-19 12:21:21', 6512.70, 41302.32, '2018-12-03 04:15:08', 'Appliance', 'cgalliennero'),
+    (17, 'Tachyglossus aculeatus', 69669985073566402768314713, 0, '2017-08-03 05:40:02', 7888.64, 86899.45, '2018-03-20 12:55:52', 'Appliance', 'darletrq'),
+    (18, 'Mazama gouazoubira', 81241981719009218371460642, 4, '2017-06-04 18:18:34', 3216.86, 97650.52, '2018-12-14 12:36:50', 'Appliance', 'darletrq'),
+    (19, 'Bubo virginianus', 18850101950965290493020039, 2, '2017-06-01 20:05:26', 8490.64, 98006.76, '2019-02-18 05:04:33', 'Appliance', 'darletrq'),
+    (20, 'Choriotis kori', 73410341971444987863651031, 2, '2018-01-24 19:04:12', 6558.05, 08605.73, '2018-11-23 00:34:28', 'Appliance', 'darletrq')
+;
+
+INSERT INTO BID
+VALUES ('2017-03-22 23:34:41', 'darletrq', 1, 50000.00),
+       ('2017-03-22 23:34:42', 'darletrq', 1, 51000.00),
+       ('2017-03-22 23:34:43', 'eswinfonrl', 1, 52000.00),
+       ('2017-03-22 23:34:41', 'eswinfonrl', 2, 40000.00),
+       ('2017-03-22 23:34:42', 'darletrq', 2, 41000.00),
+       ('2017-03-22 23:34:43', 'darletrq', 2, 42000.00),
+       ('2017-03-22 23:34:45', 'eswinfonrl', 2, 43000.00),
+       ('2017-03-22 23:34:46', 'darletrq', 2, 44000.00),
+       ('2017-03-22 23:34:47', 'clygorr', 2, 45000.00),
+       ('2017-03-22 23:34:45', 'cgalliennero', 3, 13000.00),
+       ('2017-03-22 23:34:46', 'darletrq', 3, 12000.00),
+       ('2017-03-22 23:34:47', 'cgalliennero', 3, 10000.00),
+       ('2017-03-22 23:34:44', 'clygorr', 8, 10000.00),
+       ('2017-03-22 23:34:45', 'cgalliennero', 8, 13000.00),
+       ('2017-03-24 23:34:46', 'darletrq', 8, 14000.00),
+       ('2017-03-24 23:34:48', 'clygorr', 9, 19100.00),
+       ('2017-03-23 23:34:55', 'cgalliennero', 10, 13000.00),
+       ('2017-03-23 23:34:52', 'darletrq', 10, 10000.00),
+       ('2017-03-23 23:34:51', 'cgalliennero', 10, 20000.00);
+       
+INSERT INTO RATING
+VALUES ('2017-03-22 23:34:42', 'darletrq', 1, 4, "asdasasd"),
+       ('2017-03-22 23:34:43', 'eswinfonrl', 1, 2, "asdasdasda"),
+       ('2017-03-22 23:34:41', 'eswinfonrl', 2, 5, "sadasdas"),
+       ('2017-03-22 23:34:42', 'darletrq', 2, 2, "sadasdas"),
+       ('2017-03-22 23:34:43', 'darletrq', 3, 5, "sadasdas"),
+       ('2017-03-22 23:34:45', 'eswinfonrl', 3, 3, "sadasdas"),
+       ('2017-03-22 23:34:46', 'darletrq', 4, 11, "sadasdas"),
+       ('2017-03-22 23:34:47', 'clygorr', 2, 1, "sadasdas"),
+       ('2017-03-22 23:34:45', 'cgalliennero', 3, 1, "sadasdas"),
+       ('2017-03-22 23:34:46', 'darletrq', 7, 5, "sadasdas"),
+       ('2017-03-22 23:34:47', 'cgalliennero', 2, 2, "sadasdas");

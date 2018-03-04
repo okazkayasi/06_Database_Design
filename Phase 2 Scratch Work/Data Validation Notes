@@ -1,0 +1,11 @@
+
+There are some different levels of data validation. 
+
+  * Client side: minimal validation, only invariable rules (mandatory email field etc.)
+
+  * Business layer: data format, ranges, values, internal state checking if method cannot be called anymore (we need this when a user tries to give rating more than one time to an item), user roles/permissions (admin user for us), so on.
+
+  * Data model: avoid incorrect and corrupt data on the DB, with good keys, constraints, data type/length/size etc.  
+
+- The key factors in data integrity are the contraints, referential integrity and the delete and update options. The main types of constraints in SQL are check, unique, not null, and primary constraints. Check constraints are used to make certain that a statement about the data is true for all rows in a table.
+
