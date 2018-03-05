@@ -28,7 +28,7 @@ CREATE TABLE ITEM (
   Cond smallint unsigned NOT NULL,
   Returnable boolean NOT NULL,
   Auction_Start_Datetime Timestamp NOT NULL,
-  Auction_Length NOT NULL,
+  Auction_Length smallint NOT NULL,
   Min_Sale_Price Decimal(19,2) NOT NULL,
   Get_It_Now_Price Decimal(19,2) DEFAULT NULL,
   Auction_End_Datetime Timestamp NOT NULL,
