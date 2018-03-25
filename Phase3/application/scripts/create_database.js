@@ -94,7 +94,9 @@ CREATE TABLE RATING ( \
   `Comment` varchar(1000) NOT NULL, \
   PRIMARY KEY (`Rating_Datetime`, `Username`, `Item_ID`), \
   FOREIGN KEY (`Username`) REFERENCES USER (`Username`), \
-  FOREIGN KEY (`Item_ID`) REFERENCES ITEM (`Item_ID`) \
+  FOREIGN KEY (`Item_ID`) REFERENCES ITEM (`Item_ID`), \
+  UNIQUE(`Username`, `Item_ID`), \
+  CONSTRAINT Unq_User_Item Unique(`Username`, `Item_ID`) \
 )');
 
 
