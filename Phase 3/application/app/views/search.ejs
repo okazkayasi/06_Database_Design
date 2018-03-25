@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GT Bay | <%=title %></title>
+    <% include ./partials/head %>	
+  </head>
+  
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <% include ./partials/header %>
+      <% include ./partials/side %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">          
+          <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><%=title %></li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            
+          <div class="row">
+            <div class="row">&nbsp;</div>
+            <!-- Left col -->
+            <section class="col-lg-12 connectedSortable">
+                
+                <!-- Horizontal Form -->
+                  <div class="box box-info">
+                    <div class="box-header with-border">
+                      <h3 class="box-title"><%=title%></h3>
+                    </div>
+                    <!-- /.box-header -->
+                    
+                    <div class="register-box-body">                    
+                    <!-- form start -->
+                    <form class="form-horizontal" action="/item/search" method="post">
+                      <div class="box-body">
+                        <div class="form-group has-feedback">
+                          <label for="inputKeyword" class="col-sm-3 control-label">Keyword</label>                        
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputKeyword" placeholder="Enter Search Keyword" name="keyword">
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <label for="inputCategory" class="col-sm-3 control-label">Category</label>
+                          <div class="col-sm-9">
+                              <select type="text" class="form-control" id="inputCategory" name="category">
+                                <option value="1" <%=category%>>Electronics</option>
+                              </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <label for="inputStartingBid" class="col-sm-3 control-label">Minimum Price</label>
+                          <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" class="form-control" id="inputStartingBid" placeholder="35.00" name="inputMinSalePrice">
+                            </div>                            
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <label for="inputMaxSalePrice" class="col-sm-3 control-label">Maximum Price</label>
+                          <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" class="form-control" id="inputMaxSalePrice" placeholder="60.00" name="maxSalePrice">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <label for="selectCondition" class="col-sm-3 control-label">Condition</label>
+                          <div class="col-sm-9">
+                              <select type="text" class="form-control" id="selectCondition" name="condition">
+                                <option value="1" <% if (condition == 1) {%>checked<%}%>>New</option>
+                                <option value="2" >Very Good</option>
+                                <option value="3" >Good</option>
+                                <option value="4" >Fair</option>
+                                <option value="5" >Poor</option>
+                              </select>
+                          </div>
+                        </div>                        
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-info pull-right" id='searchBtn'>Search</button>
+                      </div>
+                      <!-- /.box-footer -->
+                    </form>
+                    </div>
+                  </div>
+                  <!-- /.box -->
+        
+            </section><!-- /.Left col -->
+            
+          </div><!-- /.row -->
+            
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <% include ./partials/footer %>
+      
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
+
+	<!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.1.4 -->
+    <script src="/static/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- AdminLTE App -->
+    <script src="/static/js/app.min.js"></script>
+
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+         Both of these plugins are recommended to enhance the
+         user experience. Slimscroll is required when using the
+         fixed layout. -->
+	  
+	<!-- page script -->
+	<% include ./partials/define %>	
+    <script>
+    
+    var sessionTimeRemaining = <%=sessionTimeOutDuration %>;
+    </script>    
+	<% include ./partials/bottom %>		
+  </body>
+</html>

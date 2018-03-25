@@ -1,0 +1,35 @@
+{
+  "name": "cs6400-team105",
+  "version": "0.0.1",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "async": "latest",
+    "body-parser": "latest",
+    "compression": "latest",
+    "cookie-parser": "latest",
+    "debug": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "favicon": "latest",
+    "method-override": "latest",
+    "mysql": "latest",
+    "morgan": "latest",
+    "q": "latest",
+    "request-promise": "latest",
+    "serve-favicon": "latest",
+    "connect-flash": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "bcrypt-nodejs": "latest"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.1",
+    "grunt-contrib-watch": "latest",
+    "grunt-execute": "latest"
+  }
+}

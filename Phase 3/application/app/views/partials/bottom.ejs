@@ -1,0 +1,17 @@
+<script>
+function sessionTimeOut () {
+  console.log("Your session has been timed out.");
+  $(location).attr('href','/user/signin');
+}
+
+if (window.location.pathname.indexOf('/user/') == -1 ) {
+	setTimeout(sessionTimeOut, sessionTimeRemaining);
+
+	setInterval(function() { 
+		//console.log("setInterval: It's been one second!"); 
+
+		sessionTimeRemaining -= 1000;
+		$('#sessionTimer').html('Session Time Remaining: ' + sessionTimeRemaining / 1000 + ' sec.');
+	}, 1000);
+}
+</script>

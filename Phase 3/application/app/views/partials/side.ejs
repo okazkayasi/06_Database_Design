@@ -1,0 +1,49 @@
+	  <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img id="profile_image2" src="/static/img/avatar/<%=userid %>.jpg" class="img-circle" alt="User Image" onerror="this.src='/static/img/avatar/default.jpg'">
+            </div>
+            <div class="pull-left info">
+              <p><%=username %></p>
+              <!-- Status -->
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu">
+            <li class="treeview">
+              <a href="/user/signout">
+                <i class="glyphicon glyphicon-log-in"></i> <span>User Logout</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="/user/signup">
+                <i class="glyphicon glyphicon-user"></i> <span>User Registration</span>
+              </a>
+            </li>
+            <li class="<% if (menugroup == 'auction') { %>active<%}%> treeview">
+              <a href="/item/auction">
+                <i class="fa fa-plus"></i> <span>New Item for Auction</span>
+              </a>
+            </li>
+            <li class="<% if (menugroup == 'search') { %>active<%}%> treeview">
+              <a href="/item/search">
+                <i class="fa fa-search"></i> <span>Item Search</span>
+              </a>
+            </li>
+            <li class="<% if (menugroup == 'sale') { %>active<%}%> treeview">
+              <a href="/item/sale">
+                <i class="fa fa-money"></i> <span>Item for Sale</span>
+              </a>
+            </li>
+          </ul><!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+      </aside>
