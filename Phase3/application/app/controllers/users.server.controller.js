@@ -1,6 +1,7 @@
 /*
  business logic for USER related tasks
 */
+var logger = require('../../config/logger');
 
 exports.renderSignin = function(req, res, next) {
 	if (req.session.lastVisit) {
@@ -9,7 +10,7 @@ exports.renderSignin = function(req, res, next) {
 	
 	req.session.lastVisit = new Date();
 	
-  console.log('renderSignin======');
+    logger.debug('renderSignin======');
   
 	if (!req.user) {
 		res.render('signin', {
@@ -32,7 +33,7 @@ exports.renderSignup = function(req, res, next) {
     
 	req.logout();
 	
-    console.log('renderSignup======');
+    logger.debug('renderSignup======');
   
 	res.render('signup', {
 			messages: req.flash('error'),

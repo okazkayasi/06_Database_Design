@@ -257,7 +257,7 @@ var item = {
     Get_It_Now_Price: 99,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user1',
+    Lister_Name: 'user1'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -278,7 +278,7 @@ item = {
     Get_It_Now_Price: 80,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user1',
+    Lister_Name: 'user1'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -299,7 +299,7 @@ item = {
     Get_It_Now_Price: 2000,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user2',
+    Lister_Name: 'user2'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -320,7 +320,7 @@ item = {
     Get_It_Now_Price: 15,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Art',
-    Lister_Name: 'user3',
+    Lister_Name: 'user3'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -341,7 +341,7 @@ item = {
     Get_It_Now_Price: 12,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
-    Lister_Name: 'admin1',
+    Lister_Name: 'admin1'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -362,7 +362,7 @@ item = {
     Get_It_Now_Price: 10,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
-    Lister_Name: 'admin2',
+    Lister_Name: 'admin2'
 };
 
 insertQuery = "INSERT INTO ITEM ( \
@@ -383,7 +383,7 @@ item = {
     Get_It_Now_Price: 40,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Sporting Goods',
-    Lister_Name: 'user6',
+    Lister_Name: 'user6'
 };
 
 insertQuery = "INSERT INTO ITEM ( \

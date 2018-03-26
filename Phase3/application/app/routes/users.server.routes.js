@@ -4,7 +4,8 @@
 
 var config = require('../../config/config'),
     users = require('../controllers/users.server.controller'),
-    utils = require('./utils');
+    utils = require('./utils'),
+    logger = require('../../config/logger');
 
 module.exports = function(app, passport) {
   

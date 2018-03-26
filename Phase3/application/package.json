@@ -19,6 +19,7 @@
     "method-override": "latest",
     "mysql": "latest",
     "morgan": "latest",
+    "winston": "latest",
     "q": "latest",
     "request-promise": "latest",
     "serve-favicon": "latest",

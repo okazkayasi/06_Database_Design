@@ -1,8 +1,9 @@
 /*
  business logic for ITEM related tasks
 */
-
-var config = require('../../config/config');
+var config = require('../../config/config'),
+    items = require('../model/items.server.model'),
+    logger = require('../../config/logger');;
 
 // =====================================
 // FORM for NEW ITEM ===================
@@ -63,11 +64,39 @@ exports.search = function(req, res) {
     
 };
 
+
+// =====================================
+// Add a new ITEM ======================
+// =====================================
+exports.create = function(req, res, next, done) {
+	var newDate = new Date();
+    var addedDays = req.body.auctionLength;
+    
+    var item = {
+        itemname: req.body.itemName,
+        description: req.body.description,
+        Cond: Number(req.body.condition),
+        Returnable: (req.body.returnable === "true"),
+        Auction_Start_Datetime: new Date().toISOString(),
+        Min_Sale_Price: Number(req.body.minSalePrice),
+        Get_It_Now_Price: Number(req.body.getItNowPrice),
+        Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+        Category: req.body.category,
+        Lister_Name: req.user.username
+    };
+    
+    console.log(item);
+    
+    items.create(item, done);
+    
+	req.session.returnTo = req.url;	
+	
+};
+
 // =====================================
 // ITEM DETAIL =========================
 // =====================================
 exports.sale = function(req, res) {
-	
 	req.session.returnTo = req.url;	
 	
     res.render('sale', {

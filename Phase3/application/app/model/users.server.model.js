@@ -4,28 +4,11 @@
 var bcrypt = require('bcrypt-nodejs'),
     mysql = require('mysql'),
     dbconfig = require('../../config/mysql'),
-    db = mysql.createConnection(dbconfig.connection);
+    db = mysql.createConnection(dbconfig.connection),
+    logger = require('../../config/logger');
 
 // =====================================
-// ADD NEW USER ========================
-// =====================================
-exports.create = function(itemname, description, Cond, Returnable, Min_Sale_Price, Get_It_Now_Price, Auction_End_Datetime, Category, Lister_Name) {
-  var item = [itemname, description, Cond, Returnable, new Date().toISOString(), Min_Sale_Price, Get_It_Now_Price, Auction_End_Datetime, Category, Lister_Name]
-  
-  var insertQuery = "INSERT INTO USER ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-  var db = mysql.createConnection(dbconfig.connection);
-    
-  db.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name], function(err, result) {
-    if (err) return done(err)
-    done(null, result.insertId)
-  })
-}
-
-// =====================================
-// RETRIVE A USER BY USERNAME ==========
+// Register a new USER =================
 // =====================================
 exports.signUp = function(req, username, password, done) {
     // find a user whose username is the same as the forms username
@@ -35,7 +18,7 @@ exports.signUp = function(req, username, password, done) {
         if (err)
             return done(err);
         if (rows.length) {
-            console.log('passport.use.local-signup rows.length   ======');
+            logger.debug('passport.use.local-signup rows.length   ======');
             return done(null, false, req.flash('error', 'That username is already taken.'));
         } else {
             // if there is no user with that username
@@ -53,7 +36,7 @@ exports.signUp = function(req, username, password, done) {
                 if (err)
                   return done(err);
 
-                console.log('passport.use.local-signup = ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')');
+                logger.debug('passport.use.local-signup = ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')');
                 return done(null, user);
             });
         }
@@ -61,7 +44,7 @@ exports.signUp = function(req, username, password, done) {
 }
 
 // =====================================
-// RETRIVE A USER BY USERNAME, PASSWORD
+// Authenticate the user ===============
 // =====================================
 exports.signIn = function(req, username, password, done) {
     // find a user whose username and password are the same
@@ -84,7 +67,7 @@ exports.signIn = function(req, username, password, done) {
                 lastName: rows[0].Last_Name
             };
 
-        console.log('passport.use.local-login = ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')');
+        logger.debug('passport.use.local-login = ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')');
 
         return done(null, user);
     });

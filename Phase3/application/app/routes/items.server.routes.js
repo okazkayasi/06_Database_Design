@@ -4,7 +4,8 @@
 
 var config = require('../../config/config'),
     items = require('../controllers/items.server.controller'),
-    utils = require('./utils');
+    utils = require('./utils'),
+    logger = require('../../config/logger');
 
 module.exports = function(app, passport) {
     app.get('/', utils.ensureAuthenticated, items.auction);
@@ -14,7 +15,7 @@ module.exports = function(app, passport) {
     // =====================================
     app.route('/item/auction')
 		.get(utils.ensureAuthenticated, items.auction)  // show the item register form
-        .post(utils.ensureAuthenticated, items.sale);	
+        .post(utils.ensureAuthenticated, items.create);	
     
     // =====================================
     // ITEM SEARCH FORM ====================
