@@ -1,6 +1,12 @@
-var config = require('../../config/config'),
-	passport = require('passport');
+/*
+ business logic for ITEM related tasks
+*/
 
+var config = require('../../config/config');
+
+// =====================================
+// FORM for NEW ITEM ===================
+// =====================================
 exports.auction = function(req, res) {
 	
 	req.session.returnTo = req.url;	
@@ -27,32 +33,10 @@ exports.auction = function(req, res) {
     
 };
 
-exports.add = function(req, res) {
-	
-	req.session.returnTo = req.url;	
-	
-    res.render('auction', {
-				title: 'Added Item for Auction',
-                menugroup: 'auction',
-                submenu: '',
-                itemName: '',
-                description: '',
-                category: '',
-                condition: '',
-                startingBid: '',
-                minSalePrice: '',
-                auctionLength: '',
-                getItNowPrice: '',
-                returnable: '',
-				userid: req.user.username,
-				username: req.user.firstName + ' ' + req.user.lastName,
-				membersince: req.user.created,
-				sessionTimeOut: 'yes',
-				sessionTimeOutDuration: config.sessionTimeOutDuration
-			});
-    
-};
 
+// =====================================
+// ITEM SEARCH FORM ====================
+// =====================================
 exports.search = function(req, res) {
 	
 	req.session.returnTo = req.url;	
@@ -79,6 +63,9 @@ exports.search = function(req, res) {
     
 };
 
+// =====================================
+// ITEM DETAIL =========================
+// =====================================
 exports.sale = function(req, res) {
 	
 	req.session.returnTo = req.url;	

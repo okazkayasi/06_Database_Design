@@ -1,5 +1,6 @@
 /**
  * Created by Daniel on 3/5/2018.
+ * Initial DB setup scripts
  */
 
 var dbconfig = require('./database'),
@@ -244,15 +245,17 @@ console.log('Success: categories are added');
 
 
 // ITEM table
+var newDate = new Date();
+var addedDays = 3;
 var item = {
     itemname: 'Garmin GPS',
     description: 'This is a great GPS.',
     Cond: 3,
     Returnable: false,
-    Auction_Start_Datetime: '2018-03-26 12:22',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 70,
     Get_It_Now_Price: 99,
-    Auction_End_Datetime: '2018-03-31 12:22',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
     Lister_Name: 'user1',
 };
@@ -263,16 +266,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 5;
 item = {
     itemname: 'Canon Powershot',
     description: 'Point and shoot!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 60,
     Get_It_Now_Price: 80,
-    Auction_End_Datetime: '2018-04-01 14:14',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
     Lister_Name: 'user1',
 };
@@ -283,16 +287,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 3;
 item = {
     itemname: 'Nikon D3',
     description: 'New and in box!',
     Cond: 4,
     Returnable: false,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 1800,
     Get_It_Now_Price: 2000,
-    Auction_End_Datetime: '2018-04-05 09:19',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
     Lister_Name: 'user2',
 };
@@ -303,16 +308,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 7;
 item = {
     itemname: 'Danish Art Book',
     description: 'Delicious Danish Art',
     Cond: 3,
     Returnable: true,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 15,
-    Auction_End_Datetime: '2018-04-05 15:33',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Art',
     Lister_Name: 'user3',
 };
@@ -323,16 +329,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 10;
 item = {
     itemname: 'SQL in 10 Minutes',
     description: 'Learn SQL really fast!',
     Cond: 1,
     Returnable: false,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 12,
-    Auction_End_Datetime: '2018-04-05 16:48',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
     Lister_Name: 'admin1',
 };
@@ -343,16 +350,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 6;
 item = {
     itemname: 'SQL in 8 Minutes',
     description: 'Learn SQL even faster!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 8,
     Get_It_Now_Price: 10,
-    Auction_End_Datetime: '2018-04-08 10:01',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
     Lister_Name: 'admin2',
 };
@@ -363,16 +371,17 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-
+newDate = new Date();
+addedDays = 4;
 item = {
     itemname: 'Pull-up Bar',
     description: 'Works on any door frame.',
     Cond: 4,
     Returnable: true,
-    Auction_Start_Datetime: '2018-03-26 14:44',
+    Auction_Start_Datetime: new Date().toISOString(),
     Min_Sale_Price: 25,
     Get_It_Now_Price: 40,
-    Auction_End_Datetime: '2018-04-09 22:09',
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Sporting Goods',
     Lister_Name: 'user6',
 };

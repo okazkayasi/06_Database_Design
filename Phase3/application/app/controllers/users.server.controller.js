@@ -1,3 +1,6 @@
+/*
+ business logic for USER related tasks
+*/
 
 exports.renderSignin = function(req, res, next) {
 	if (req.session.lastVisit) {
