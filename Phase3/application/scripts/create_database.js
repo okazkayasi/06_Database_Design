@@ -213,7 +213,7 @@ var adminuser = {
     position: 'Technical Support'
 };
 
-var insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
+insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
 
 connection.query(insertQuery,[adminuser.username, adminuser.position]);
 console.log('Success: a new admin user is added = ' + adminuser.username)
@@ -224,7 +224,7 @@ adminuser = {
     position: 'Chief Techy'
 };
 
-var insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
+insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
 
 connection.query(insertQuery,[adminuser.username, adminuser.position]);
 console.log('Success: a new admin user is added = ' + adminuser.username)
@@ -242,26 +242,147 @@ connection.query("INSERT INTO CATEGORY ( `Category_Name` ) values ('Other')");
 
 console.log('Success: categories are added');
 
-/*
+
 // ITEM table
 var item = {
-    itemname: 'user1',
-    description: 'Danite',
-    Cond: 'Kelor',
-    Returnable: 'Danite',
-    Auction_Start_Datetime: 'Danite',
-    Min_Sale_Price: 'Danite',
-    Get_It_Now_Price: 'Danite',
-    Auction_End_Datetime: 'Danite',
-    Category: 'Danite',
-    Lister_Name: 'Danite',
+    itemname: 'Garmin GPS',
+    description: 'This is a great GPS.',
+    Cond: 3,
+    Returnable: false,
+    Auction_Start_Datetime: '2018-03-26 12:22',
+    Min_Sale_Price: 70,
+    Get_It_Now_Price: 99,
+    Auction_End_Datetime: '2018-03-31 12:22',
+    Category: 'Electronics',
+    Lister_Name: 'user1',
 };
 
-var insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
 
-connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-&/
+
+item = {
+    itemname: 'Canon Powershot',
+    description: 'Point and shoot!',
+    Cond: 2,
+    Returnable: false,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 60,
+    Get_It_Now_Price: 80,
+    Auction_End_Datetime: '2018-04-01 14:14',
+    Category: 'Electronics',
+    Lister_Name: 'user1',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+
+item = {
+    itemname: 'Nikon D3',
+    description: 'New and in box!',
+    Cond: 4,
+    Returnable: false,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 1800,
+    Get_It_Now_Price: 2000,
+    Auction_End_Datetime: '2018-04-05 09:19',
+    Category: 'Electronics',
+    Lister_Name: 'user2',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+
+item = {
+    itemname: 'Danish Art Book',
+    description: 'Delicious Danish Art',
+    Cond: 3,
+    Returnable: true,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 10,
+    Get_It_Now_Price: 15,
+    Auction_End_Datetime: '2018-04-05 15:33',
+    Category: 'Art',
+    Lister_Name: 'user3',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+
+item = {
+    itemname: 'SQL in 10 Minutes',
+    description: 'Learn SQL really fast!',
+    Cond: 1,
+    Returnable: false,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 10,
+    Get_It_Now_Price: 12,
+    Auction_End_Datetime: '2018-04-05 16:48',
+    Category: 'Books',
+    Lister_Name: 'admin1',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+
+item = {
+    itemname: 'SQL in 8 Minutes',
+    description: 'Learn SQL even faster!',
+    Cond: 2,
+    Returnable: false,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 8,
+    Get_It_Now_Price: 10,
+    Auction_End_Datetime: '2018-04-08 10:01',
+    Category: 'Books',
+    Lister_Name: 'admin2',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+
+item = {
+    itemname: 'Pull-up Bar',
+    description: 'Works on any door frame.',
+    Cond: 4,
+    Returnable: true,
+    Auction_Start_Datetime: '2018-03-26 14:44',
+    Min_Sale_Price: 25,
+    Get_It_Now_Price: 40,
+    Auction_End_Datetime: '2018-04-09 22:09',
+    Category: 'Sporting Goods',
+    Lister_Name: 'user6',
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+
+console.log('Success: items are added');
 
 connection.end();
