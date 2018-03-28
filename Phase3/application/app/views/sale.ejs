@@ -40,47 +40,44 @@
                     <form class="form-horizontal" action="/item/auction" method="post">
                       <div class="box-body">
                         <div class="form-group has-feedback">
-                          <label for="inputItemName" class="col-sm-3 control-label">Item ID</label>                        
-                          <div class="col-sm-9 control-label">1234</div>
+                          <label class="col-sm-3 control-label">Item ID</label>
+                          <div class="col-sm-9 "><%=itemId%></div>
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Item Name</label>
-                          <div class="col-sm-9 "><%=itemName%> ABC</div>
+                          <div class="col-sm-9 "><%=itemName%></div>
                         </div>
                         <div class="form-group has-feedback">
-                          <label for="textareaDescription" class="col-sm-3 control-label">Description</label>
-                          <div class="col-sm-9"><%=description%> Description</div>
+                          <label class="col-sm-3 control-label">Description</label>
+                          <div class="col-sm-9"><%=description%></div>
                         </div>
                         <div class="form-group has-feedback">
-                          <label for="inputCategory" class="col-sm-3 control-label">Category</label>
-                          <div class="col-sm-9"><%=category%> Category</div>
+                          <label class="col-sm-3 control-label">Category</label>
+                          <div class="col-sm-9"><%=category%></div>
                         </div>
                         <div class="form-group has-feedback">
-                          <label for="selectCondition" class="col-sm-3 control-label">Condition</label>
-                          <div class="col-sm-9"><%=condition%> Condition</div>
+                          <label class="col-sm-3 control-label">Condition</label>
+                          <div class="col-sm-9"><%=condition%></div>
                         </div>
                         <div class="form-group">
-                          <div class="col-sm-offset-3 col-sm-9">
-                            <div class="checkbox">
-                              <label>
-                                <input disable type="checkbox" name="returnable" value="1" <%=returnable%>> Returns Accepted?
-                              </label>
-                            </div>
-                          </div>
+                          <label class="col-sm-3 control-label">Returns Accepted?</label>
+                          <div class="col-sm-9"><%=returnable%></div>                    
                         </div>
+                        <% if (getItNowPrice > 0) {%>
                         <div class="form-group">
-                          <label for="inputGetItNowPrice" class="col-sm-3 control-label">Get It Now price</label>
+                          <label class="col-sm-3 control-label">Get It Now price</label>
                           <div class="col-sm-9">
-                              <%=getItNowPrice%>77
+                              $<%=getItNowPrice%> &nbsp;
                               <button type="button" class="btn btn-default">Get it Now!</button>
                           </div>                    
                         </div>
+                        <% } %>
                         <div class="form-group has-feedback">
-                          <label for="inputAuctionLength" class="col-sm-3 control-label">Auction ends</label>
+                          <label class="col-sm-3 control-label">Auction ends</label>
                           <div class="col-sm-9"><%=auctionLength%></div>
                         </div>
                         <div class="form-group has-feedback">
-                          <label for="inputStartingBid" class="col-sm-3 control-label">Your bid</label>
+                          <label class="col-sm-3 control-label">Your bid</label>
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>

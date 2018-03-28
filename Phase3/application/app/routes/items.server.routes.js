@@ -22,7 +22,7 @@ module.exports = function(app, passport) {
     // =====================================
     app.route('/item/search')
 		.get(utils.ensureAuthenticated, items.search)  // show the item search form
-        .post(utils.ensureAuthenticated, items.search);	
+        .post(utils.ensureAuthenticated, items.getItems);	
     
     // =====================================
     // ITEM DETAIL =========================
