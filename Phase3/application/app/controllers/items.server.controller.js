@@ -66,31 +66,73 @@ exports.search = function(req, res) {
 
 
 // =====================================
-// Display Search Results ==============
+// Display Search Results View =========
 // =====================================
-exports.getItems = function(req, res) {
+exports.searchResult = function(req, res, done) {
 	
-	req.session.returnTo = req.url;	
+    var item = {
+        keyword: req.body.keyword,
+        category: req.body.category,
+        minAuctionPrice: Number(req.body.minSalePrice),
+        maxAuctionPrice: Number(req.body.maxSalePrice),
+        condition: Number(req.body.condition)
+    };
+    
+    logger.debug(item);
+    
+    var jsonResult;
+    
+    items.getItems(item, function(err, results) {
+		if (err) {
+			return done(err);			
+		} else {	
+            logger.debug(results);
+			jsonResult = results;	
+            
+            req.session.returnTo = req.url;	
 	
-    res.render('search-result', {
+            res.render('search-result', {
 				title: 'Item Search Result',
                 menugroup: 'search',
                 submenu: '',
-                itemName: '',
-                description: '',
-                category: '',
-                condition: '2',
-                startingBid: '',
-                minSalePrice: '',
-                auctionLength: '',
-                getItNowPrice: '',
-                returnable: '',
+                results: jsonResult,
 				userid: req.user.username,
 				username: req.user.firstName + ' ' + req.user.lastName,
 				membersince: req.user.created,
 				sessionTimeOut: 'yes',
 				sessionTimeOutDuration: config.sessionTimeOutDuration
 			});
+    
+		}
+	});
+    
+    
+	
+};
+
+// =====================================
+// Ajax retrieve Search Results ========
+// =====================================
+exports.getItems = function(req, res, next) {
+	
+    var item = {
+        keyword: req.body.keyword,
+        category: req.body.category,
+        minAuctionPrice: Number(req.body.minSalePrice),
+        maxAuctionPrice: Number(req.body.maxSalePrice),
+        condition: Number(req.body.condition)
+    };
+    
+    logger.debug(item);
+    
+    items.getItems(item, function(err, results) {
+		if (err) {
+			return next(err);			
+		} else {	
+            logger.debug(results);
+			res.json(results);		
+		}
+	});
     
 };
 

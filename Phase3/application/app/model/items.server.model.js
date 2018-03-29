@@ -40,6 +40,32 @@ exports.getItem = function(item, done) {
 }
 
 // =====================================
+// Retrieve searched ITEMS =============
+// =====================================
+exports.getItems = function(item, done) {
+    var selectQuery = "SELECT * FROM ITEM WHERE `Category`=? \
+AND `Cond`=? ";
+    if (item.keyword != '') {
+       selectQuery = selectQuery + "AND (`Item_Name` LIKE '%" + db.escape(item.keyword) + "%'  \
+OR `Description` LIKE '%" + db.escape(item.keyword) + "%') "; 
+    }
+    if (item.minAuctionPrice > 0) {
+       selectQuery = selectQuery + "AND `Min_Sale_Price` <= " + db.escape(item.minAuctionPrice); 
+    }
+    if (item.maxAuctionPrice > 0) {
+       selectQuery = selectQuery + "AND `Min_Sale_Price` >= " + db.escape(item.maxAuctionPrice); 
+    }
+
+    logger.debug('SQL = ' + selectQuery);
+
+    
+    db.query(selectQuery, [item.category, item.condition], function (err, rows) {
+        if (err) return done(err)
+        done(null, rows)
+    })
+}
+
+// =====================================
 // RETRIVE ALL ITEMS ===================
 // =====================================
 exports.getAll = function(done) {

@@ -50,7 +50,7 @@
                           <label for="inputCategory" class="col-sm-3 control-label">Category</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="inputCategory" name="category">
-                                <option value="1" <%=category%>>Electronics</option>
+                                <option value="Electronics" checked>Electronics</option>
                               </select>
                           </div>
                         </div>
@@ -59,7 +59,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="inputStartingBid" placeholder="35.00" name="inputMinSalePrice">
+                                <input type="text" class="form-control" id="inputMinSalePrice" placeholder="35.00" name="minSalePrice">
                             </div>                            
                           </div>
                         </div>
@@ -76,7 +76,7 @@
                           <label for="selectCondition" class="col-sm-3 control-label">Condition</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="selectCondition" name="condition">
-                                <option value="1" <% if (condition == 1) {%>checked<%}%>>New</option>
+                                <option value="1" checked>New</option>
                                 <option value="2" >Very Good</option>
                                 <option value="3" >Good</option>
                                 <option value="4" >Fair</option>
