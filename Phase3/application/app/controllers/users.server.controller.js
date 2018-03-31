@@ -3,6 +3,9 @@
 */
 var logger = require('../../config/logger');
 
+// =====================================
+// User Login ==========================
+// =====================================
 exports.renderSignin = function(req, res, next) {
 	if (req.session.lastVisit) {
 		console.log(req.session.lastVisit);		
@@ -24,6 +27,9 @@ exports.renderSignin = function(req, res, next) {
 	}
 };
 
+// =====================================
+// User Registration ===================
+// =====================================
 exports.renderSignup = function(req, res, next) {
 	if (req.session.lastVisit) {
 		console.log(req.session.lastVisit);		
@@ -45,6 +51,9 @@ exports.renderSignup = function(req, res, next) {
 	});
 }
 
+// =====================================
+// User Sign Out =======================
+// =====================================
 exports.signout = function(req, res) {
 	req.logout();
 	res.status(301).redirect('/');

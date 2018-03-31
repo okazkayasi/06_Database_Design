@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
     // =====================================
     app.route('/item/auction')
 		.get(utils.ensureAuthenticated, items.auction)  // show the item register form
-        .post(utils.ensureAuthenticated, items.create);	
+        .post(utils.ensureAuthenticated, items.insertUpdate);	
     
     // =====================================
     // ITEM SEARCH FORM ====================
@@ -23,8 +23,10 @@ module.exports = function(app, passport) {
     app.route('/item/search')
 		.get(utils.ensureAuthenticated, items.search)  // show the item search form
         .post(utils.ensureAuthenticated, items.searchResult);	
+    app.route('/item/sale-rate')
+		.get(utils.ensureAuthenticated, items.rate);  // show the item rating form 
     app.route('/item/ajax/search')
-		.post(utils.ensureAuthenticated, items.getItems)  // retrieve the search result
+		.post(utils.ensureAuthenticated, items.getItems);  // retrieve the search result
     
     // =====================================
     // ITEM DETAIL =========================

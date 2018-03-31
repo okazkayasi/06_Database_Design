@@ -35,13 +35,14 @@
                     </div>
                     <!-- /.box-header -->
                     
-                    <div class="register-box-body">                    
-                    <!-- form start -->
-                    <form class="form-horizontal" action="/item/auction" method="post">
+                    <div class="register-box-body">                   
+                    <!-- form start -->   
+                    <form class="form-horizontal" action="/item/auction" method="post">  
+                        <input type="hidden" id="minSalePrice" value="<%=minSalePrice%>">
                       <div class="box-body">
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Item ID</label>
-                          <div class="col-sm-9 "><%=itemId%></div>
+                          <div class="col-sm-9 "><%=itemId%>  &nbsp; <button type="button" onClick="window.location.href='/item/sale-rate?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>View Rating</button></div>
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Item Name</label>
@@ -49,7 +50,7 @@
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Description</label>
-                          <div class="col-sm-9"><%=description%></div>
+                          <div class="col-sm-9"><%=description%> &nbsp; <button type="button" onClick="window.location.href='/item/auction?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>Edit Description</button></div>
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Category</label>
@@ -61,40 +62,39 @@
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Returns Accepted?</label>
-                          <div class="col-sm-9"><%=returnable%></div>                    
+                          <div class="col-sm-9"><%=returnable%></div>
                         </div>
                         <% if (getItNowPrice > 0) {%>
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Get It Now price</label>
-                          <div class="col-sm-9">
-                              $<%=getItNowPrice%> &nbsp;
-                              <button type="button" class="btn btn-default">Get it Now!</button>
-                          </div>                    
+                          <div class="col-sm-9">$<%=getItNowPrice%> &nbsp; <button type="button" onClick="window.location.href='/item/get-it-now?id=<%=itemId%>'" class="btn btn-default">Get it Now!</button>
+                          </div>
                         </div>
                         <% } %>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Auction ends</label>
                           <div class="col-sm-9"><%=auctionLength%></div>
                         </div>
+                        
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Your bid</label>
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="inputStartingBid" placeholder="minimum bid is $<%=minSalePrice%>" name="startingBid">
-                            </div>                            
+                                <input type="text" class="form-control" id="myBidPrice" placeholder="minimum bid is $<%=minSalePrice%>" name="myBidPrice" onkeyup="checkBidPrice('myBidPrice','minSalePrice','confirmMessage','bidBtn'); return false;">
+                            </div>
+                            <span id="confirmMessage" class="confirmMessage"></span>
                           </div>
+                          
                         </div>
-                        
-                        
                       </div>
                       <!-- /.box-body -->
                       <div class="box-footer">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-info pull-right" id='registerBtn'>Bid On This Item</button>
+                        <button type="button" onClick="window.location.href=document.referrer" class="btn btn-default">Go Back</button>
+                        <button type="submit" class="btn btn-info pull-right" id='bidBtn' disabled="true">Bid On This Item</button>
                       </div>
                       <!-- /.box-footer -->
-                    </form>
+                      </form>
                     </div>
                   </div>
                   <!-- /.box --> 
@@ -132,7 +132,42 @@
 	<!-- page script -->
 	<% include ./partials/define %>	
     <script>
-    
+    function checkBidPrice(p1, p2, m, btn) {
+        console.log('checkBidPrice..');
+        //Store the bidding price field objects into variables ...
+        var bidPrice = document.getElementById(p1);
+        var mimBidPrice = document.getElementById(p2);
+
+        //Store the Confimation Message Object ...
+        var message = document.getElementById(m);
+
+        //Disable the submit button if the bid price is not valid
+        var submitBtn = document.getElementById(btn);
+
+        //Set the colors we will be using ...
+        var goodColor = "#66cc66";
+        var badColor = "#ff6666";
+        //Compare the values in the bidding price field 
+        //and the confirmation field
+        if(bidPrice.value >= mimBidPrice.value){
+            //The bidding price is valid.
+            //Set the color to the good color and inform
+            //the user that they have entered the valid price 
+            bidPrice.style.backgroundColor = goodColor;
+            message.style.color = goodColor;
+            message.innerHTML = "Valid Bidding Price!"
+            submitBtn.disabled = false;
+        }else{
+            //The bidding price is not valid.
+            //Set the color to the bad color and
+            //notify the user.
+            bidPrice.style.backgroundColor = badColor;
+            message.style.color = badColor;
+            message.innerHTML = "Bidding Price Is Not Valid!"
+            submitBtn.disabled = true;
+        }
+    }  
+        
     var sessionTimeRemaining = <%=sessionTimeOutDuration %>;
     </script>    
 	<% include ./partials/bottom %>		

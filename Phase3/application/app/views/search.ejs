@@ -50,7 +50,10 @@
                           <label for="inputCategory" class="col-sm-3 control-label">Category</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="inputCategory" name="category">
-                                <option value="Electronics" checked>Electronics</option>
+                                <option value="" checked>All Categories</option>
+                            <% for(var i = 0; i < categories.length; i++) { %>
+                                <option value="<%=categories[i].Category_Name %>"><%=categories[i].Category_Name %></option>
+                            <% } %>
                               </select>
                           </div>
                         </div>
@@ -76,7 +79,8 @@
                           <label for="selectCondition" class="col-sm-3 control-label">Condition</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="selectCondition" name="condition">
-                                <option value="1" checked>New</option>
+                                <option value="" checked>Any Condition</option>
+                                <option value="1" >New</option>
                                 <option value="2" >Very Good</option>
                                 <option value="3" >Good</option>
                                 <option value="4" >Fair</option>

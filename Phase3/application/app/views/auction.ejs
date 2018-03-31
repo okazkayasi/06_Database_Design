@@ -26,6 +26,7 @@
             
             <div class="row">
               <div class="row">&nbsp;</div>
+                
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
                 
@@ -36,29 +37,40 @@
                     </div>
                     <!-- /.box-header -->
                     
-                    <div class="register-box-body">                    
+                    <div class="register-box-body">                   <% if (messages[0]) { %>
+                      <div class="callout callout-danger">
+                        <h4><i class="fa fa-warning"></i> Errors:</h4>
+                        <% for(var i in messages) { %>
+                          <div class="flash"><%= messages[i] %></div>
+                        <% } %>
+                      </div>
+                    <% } %> 
                     <!-- form start -->
                     <form class="form-horizontal" action="/item/auction" method="post">
-                      <div class="box-body">                        
+                      <input type="hidden" name="itemId" value="<%=itemId%>">
+                      <div class="box-body">      
+                    <% if (itemId == '') {%>
                         <div class="form-group has-feedback">
                           <label for="inputItemName" class="col-sm-3 control-label">Item Name</label>                        
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputItemName" placeholder="Enter Item Name" name="itemName" value="<%=itemName%>">
+                            <input type="text" class="form-control" id="inputItemName" placeholder="Enter Item Name" name="itemName" value="">
                           </div>
                         </div>
+                    <% } %>
                         <div class="form-group has-feedback">
                           <label for="textareaDescription" class="col-sm-3 control-label">Description</label>
                           <div class="col-sm-9">
-                            <textarea class="form-control" rows="3" id="textareaDescription" placeholder="Enter Description" name="description"></textarea>
+                            <textarea class="form-control" rows="3" id="textareaDescription" placeholder="Enter Description" name="description"><%=description %></textarea>
                           </div>
                         </div>
+                    <% if (itemId == '') {%>
                         <div class="form-group has-feedback">
                           <label for="inputCategory" class="col-sm-3 control-label">Category</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="inputCategory" name="category">
-                                <option value="Electronics">Electronics</option>
-                                <option value="Art">Art</option>
-                                <option value="Books">Books</option>
+                            <% for(var i = 0; i < categories.length; i++) { %>
+                                <option value="<%=categories[i].Category_Name %>"><%=categories[i].Category_Name %></option>
+                            <% } %>
                               </select>
                           </div>
                         </div>
@@ -66,7 +78,7 @@
                           <label for="selectCondition" class="col-sm-3 control-label">Condition</label>
                           <div class="col-sm-9">
                               <select type="text" class="form-control" id="selectCondition" name="condition">
-                                <option value="1" <%=condition%>>New</option>
+                                <option value="1" >New</option>
                                 <option value="2" >Very Good</option>
                                 <option value="3" >Good</option>
                                 <option value="4" >Fair</option>
@@ -79,7 +91,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="inputStartingBid" placeholder="35.00" name="startingBid" value="<%=startingBid%>">
+                                <input type="text" class="form-control" id="inputStartingBid" placeholder="35.00" name="startingBid" value="">
                             </div>                            
                           </div>
                         </div>
@@ -88,7 +100,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="inputMinSalePrice" placeholder="60.00" name="minSalePrice" value="<%=minSalePrice%>">
+                                <input type="text" class="form-control" id="inputMinSalePrice" placeholder="60.00" name="minSalePrice" value="">
                             </div>
                           </div>
                         </div>
@@ -96,7 +108,7 @@
                           <label for="inputAuctionLength" class="col-sm-3 control-label">Auction ends in</label>
                           <div class="col-sm-9">
                             <select type="text" class="form-control" id="inputAuctionLength" name="auctionLength">
-                                <option value="1" <%=auctionLength%>>1 day</option>
+                                <option value="1" >1 day</option>
                                 <option value="3" >3 days</option>
                                 <option value="5" >5 days</option>
                                 <option value="7" >7 days</option>
@@ -108,7 +120,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="inputGetItNowPrice" placeholder="79.00" name="getItNowPrice" value="<%=getItNowPrice%>">
+                                <input type="text" class="form-control" id="inputGetItNowPrice" placeholder="79.00" name="getItNowPrice" value="">
                               </div>                            
                           </div>                    
                         </div>
@@ -116,16 +128,17 @@
                           <div class="col-sm-offset-3 col-sm-9">
                             <div class="checkbox">
                               <label>
-                                <input type="checkbox" name="returnable" value="true" <%=returnable%>> Returns Accepted?
+                                <input type="checkbox" name="returnable" value="true"> Returns Accepted?
                               </label>
                             </div>
                           </div>
                         </div>
+                    <% } %>
                       </div>
                       <!-- /.box-body -->
                       <div class="box-footer">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-info pull-right" id='registerBtn'>List My Item</button>
+                        <button type="button" onClick="window.location.href='/item/sale?id=<%=itemId%>'" class="btn btn-default" on>Go Back</button>
+                        <button type="submit" class="btn btn-info pull-right" id='registerBtn'>Update</button>
                       </div>
                       <!-- /.box-footer -->
                     </form>

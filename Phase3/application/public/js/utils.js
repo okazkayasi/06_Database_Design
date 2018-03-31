@@ -31,4 +31,4 @@ function checkPass(p1, p2, m, btn) {
         message.innerHTML = "Passwords Do Not Match!"
 		submitBtn.disabled = true;
     }
-}  
+}
