@@ -394,4 +394,70 @@ connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.R
 
 console.log('Success: items are added');
 
+
+// BID table
+newDate = new Date();
+addedDays = -7;
+
+console.log(new Date().toISOString());
+
+var bid = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )),
+    username: 'user4',
+    itemId: 1,
+    Bid_Amount: 50
+};
+
+insertQuery = "INSERT INTO BID ( \
+  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
+
+connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+
+
+newDate = new Date();
+addedDays = -6;
+
+bid = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    username: 'user5',
+    itemId: 1,
+    Bid_Amount: 55
+};
+
+insertQuery = "INSERT INTO BID ( \
+  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
+
+connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+
+
+addedDays = -5;
+bid = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    username: 'user4',
+    itemId: 1,
+    Bid_Amount: 75
+};
+
+insertQuery = "INSERT INTO BID ( \
+  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
+
+connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+
+addedDays = -4;
+bid = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    username: 'user5',
+    itemId: 1,
+    Bid_Amount: 85
+};
+
+insertQuery = "INSERT INTO BID ( \
+  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
+
+connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+
+
+
+console.log('Success: bids are added');
+
 connection.end();
