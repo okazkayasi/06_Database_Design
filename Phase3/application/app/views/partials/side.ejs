@@ -35,13 +35,33 @@
             </li>
             <li class="<% if (menugroup == 'search') { %>active<%}%> treeview">
               <a href="/item/search">
-                <i class="fa fa-search"></i> <span>Item Search</span>
+                <i class="fa fa-search"></i> <span>Search for Items</span>
               </a>
             </li>
             <li class="<% if (menugroup == 'sale') { %>active<%}%> treeview">
               <a href="/item/sale?id=1">
                 <i class="fa fa-money"></i> <span>Item for Sale</span>
               </a>
+            </li>
+            <li class="<% if (menugroup == 'report') { %>active<%}%> treeview">
+              <a href="#">
+                <i class="fa fa-file"></i> <span>View Report</span>
+              </a>
+              <ul class="treeview-menu <% if (menugroup == 'report') { %>active<%}%>">
+                <li <% if (submenu == 'category') { %>class="active"<%}%>><a href="/report/category">
+                  <i class="fa fa-file"></i> <span>View Category Report</span></a>
+                </li>
+              </ul>
+              <ul class="treeview-menu <% if (menugroup == 'report') { %>active<%}%>">
+                <li <% if (submenu == 'user') { %>class="active"<%}%>><a href="/report/user">
+                  <i class="fa fa-file"></i> <span>View User Report</span></a>
+                </li>
+              </ul>
+            </li>
+            
+            
+            <li class="<% if (menugroup == 'report') { %>active<%}%> treeview">
+              
             </li>
           </ul><!-- /.sidebar-menu -->
         </section>

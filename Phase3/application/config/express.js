@@ -45,6 +45,7 @@ module.exports = function() {
     // routes ======================================================================
     require('../app/routes/users.server.routes.js')(app, passport);
     require('../app/routes/items.server.routes.js')(app, passport);
+    require('../app/routes/reports.server.routes.js')(app, passport);
 	
 	return app;
 };

@@ -8,7 +8,10 @@ var config = require('../../config/config'),
     logger = require('../../config/logger');
 
 module.exports = function(app, passport) {
-    app.get('/', utils.ensureAuthenticated, items.auction);
+    // =====================================
+    // Homepage after logging in ===========
+    // =====================================
+    app.get('/', utils.ensureAuthenticated, items.search);
     
     // =====================================
     // FORM for NEW ITEM ===================
@@ -22,7 +25,7 @@ module.exports = function(app, passport) {
     // =====================================
     app.route('/item/search')
 		.get(utils.ensureAuthenticated, items.search)  // show the item search form
-        .post(utils.ensureAuthenticated, items.searchResult);	
+        .post(utils.ensureAuthenticated, items.searchResult);	// show item search result
     app.route('/item/sale-rate')
 		.get(utils.ensureAuthenticated, items.rate);  // show the item rating form 
     app.route('/item/ajax/search')
