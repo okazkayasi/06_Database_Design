@@ -3,7 +3,7 @@
 */
 var config = require('../../config/config'),
     items = require('../model/items.server.model'),
-    logger = require('../../config/logger');;
+    logger = require('../../config/logger');
 
 // =====================================
 // FORM for NEW ITEM ===================

@@ -5,14 +5,16 @@
 
 var dbconfig = require('./database'),
 	mysql = require('mysql'),
-    bcrypt = require('bcrypt-nodejs');
+    bcrypt = require('bcrypt-nodejs'),
+    sleep = require('system-sleep'),
+    logger = require('../config/logger');
 
 var connection = mysql.createConnection(dbconfig.connection);
 
 connection.query('DROP DATABASE IF EXISTS ' + dbconfig.database);
 
 connection.query('CREATE DATABASE ' + dbconfig.database);
-console.log('Success: Database Created!')
+logger.debug('Success: Database Created!')
 
 connection.query('USE ' + dbconfig.database);
 
@@ -39,7 +41,7 @@ CREATE TABLE `USER` ( \
     `Last_Name` VARCHAR(50) NOT NULL, \
         PRIMARY KEY (`Username`) \
 )');
-console.log('Success: USER table Created!')
+logger.debug('Success: USER table Created!')
 
 // ADMIN_USER table
 connection.query('\
@@ -49,7 +51,7 @@ CREATE TABLE `ADMIN_USER` ( \
         PRIMARY KEY (`Username`), \
         FOREIGN KEY (`Username`) REFERENCES USER (Username) \
 )');
-console.log('Success: ADMIN_USER table Created!')
+logger.debug('Success: ADMIN_USER table Created!')
 
 // CATEGORY table
 connection.query('\
@@ -57,7 +59,7 @@ CREATE TABLE `CATEGORY` ( \
     `Category_Name` VARCHAR(100) NOT NULL, \
         PRIMARY KEY (`Category_Name`) \
 )');
-console.log('Success: CATEGORY table Created!')
+logger.debug('Success: CATEGORY table Created!')
 
 // ITEM table
 connection.query('\
@@ -77,7 +79,7 @@ CREATE TABLE `ITEM` ( \
   FOREIGN KEY (`Lister_Name`) REFERENCES USER (`Username`), \
   FOREIGN KEY (`Category`) REFERENCES CATEGORY (`Category_Name`) \
 )');
-console.log('Success: ITEM table Created!')
+logger.debug('Success: ITEM table Created!')
 
 // BID table
 connection.query('\
@@ -86,11 +88,11 @@ CREATE TABLE BID ( \
   `Username` varchar(250) NOT NULL, \
   `Item_ID` int unsigned NOT NULL, \
   `Bid_Amount` Decimal(19,2) NOT NULL, \
-  PRIMARY KEY (`Bid_Datetime`, `Username`, `Item_ID`), \
+PRIMARY KEY (`Bid_Datetime`, `Username`, `Item_ID`), \
   FOREIGN KEY (`Username`) REFERENCES USER (`Username`), \
   FOREIGN KEY (`Item_ID`) REFERENCES ITEM (`Item_ID`) \
 )');
-console.log('Success: BID table Created!')
+logger.debug('Success: BID table Created!')
 
 // RATING table
 connection.query('\
@@ -106,7 +108,7 @@ CREATE TABLE RATING ( \
   UNIQUE(`Username`, `Item_ID`), \
   CONSTRAINT Unq_User_Item Unique(`Username`, `Item_ID`) \
 )');
-console.log('Success: RATING table Created!')
+logger.debug('Success: RATING table Created!')
 
 // ---- Inserting Sample Data ---
 // USER table
@@ -120,7 +122,7 @@ var user = {
 var insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'user2',
@@ -132,7 +134,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'user3',
@@ -144,7 +146,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'user4',
@@ -156,7 +158,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 
 user = {
@@ -169,7 +171,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'user6',
@@ -181,7 +183,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'admin1',
@@ -193,7 +195,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 user = {
     username: 'admin2',
@@ -205,7 +207,7 @@ user = {
 insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
 
 connection.query(insertQuery,[user.username, user.password, user.firstName, user.lastName]);
-console.log('Success: a new user is added = ' + user.username)
+logger.debug('Success: a new user is added = ' + user.username)
 
 
 // ADMIN_USER table
@@ -217,7 +219,7 @@ var adminuser = {
 insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
 
 connection.query(insertQuery,[adminuser.username, adminuser.position]);
-console.log('Success: a new admin user is added = ' + adminuser.username)
+logger.debug('Success: a new admin user is added = ' + adminuser.username)
 
 
 adminuser = {
@@ -228,7 +230,7 @@ adminuser = {
 insertQuery = "INSERT INTO ADMIN_USER ( Username, Position ) values (?,?)";
 
 connection.query(insertQuery,[adminuser.username, adminuser.position]);
-console.log('Success: a new admin user is added = ' + adminuser.username)
+logger.debug('Success: a new admin user is added = ' + adminuser.username)
 
 
 
@@ -241,7 +243,7 @@ connection.query("INSERT INTO CATEGORY ( `Category_Name` ) values ('Sporting Goo
 connection.query("INSERT INTO CATEGORY ( `Category_Name` ) values ('Toys')");
 connection.query("INSERT INTO CATEGORY ( `Category_Name` ) values ('Other')");
 
-console.log('Success: categories are added');
+logger.debug('Success: categories are added');
 
 
 // ITEM table
@@ -392,17 +394,14 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
 
-console.log('Success: items are added');
+logger.debug('Success: items are added');
 
 
 // BID table
 newDate = new Date();
-addedDays = -7;
 
-console.log(new Date().toISOString());
-
-var bid = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )),
+var bid1 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
     username: 'user4',
     itemId: 1,
     Bid_Amount: 50
@@ -411,53 +410,209 @@ var bid = {
 insertQuery = "INSERT INTO BID ( \
   `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
 
-connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
-
-newDate = new Date();
-addedDays = -6;
-
-bid = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+bid1 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 55
 };
 
-insertQuery = "INSERT INTO BID ( \
-  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
-
-connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
 
-addedDays = -5;
-bid = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+bid1 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
     username: 'user4',
     itemId: 1,
     Bid_Amount: 75
 };
 
-insertQuery = "INSERT INTO BID ( \
-  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
-connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
 
-addedDays = -4;
-bid = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+bid1 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.4 * 86400000 )).toISOString(),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 85
 };
 
-insertQuery = "INSERT INTO BID ( \
-  `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) values (?,?,?,?)";
-
-connection.query(insertQuery,[bid.bidDate, bid.username, bid.itemId, bid.Bid_Amount]);
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
 
+var bid2 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'user6',
+    itemId: 2,
+    Bid_Amount: 80
+};
 
-console.log('Success: bids are added');
+connection.query(insertQuery,[bid2.bidDate, bid2.username, bid2.itemId, bid2.Bid_Amount]);
+logger.debug('A new bidding (' + bid2.bidDate + '|' + bid2.username + '|' + bid2.itemId +') has been inserted.');
+
+
+var bid3 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'user1',
+    itemId: 3,
+    Bid_Amount: 1500
+};
+
+connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid_Amount]);
+logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
+
+
+bid3 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    username: 'user3',
+    itemId: 3,
+    Bid_Amount: 1501
+};
+
+connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid_Amount]);
+logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
+
+bid3 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
+    username: 'user1',
+    itemId: 3,
+    Bid_Amount: 1795
+};
+
+connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid_Amount], function(){
+  logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
+});
+
+
+var bid7 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'user4',
+    itemId: 7,
+    Bid_Amount: 20
+};
+
+connection.query(insertQuery,[bid7.bidDate, bid7.username, bid7.itemId, bid7.Bid_Amount]);
+logger.debug('A new bidding (' + bid7.bidDate + '|' + bid7.username + '|' + bid7.itemId +') has been inserted.');
+
+bid7 = {
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    username: 'user2',
+    itemId: 7,
+    Bid_Amount: 25
+};
+
+connection.query(insertQuery,[bid7.bidDate, bid7.username, bid7.itemId, bid7.Bid_Amount]);
+logger.debug('A new bidding (' + bid7.bidDate + '|' + bid7.username + '|' + bid7.itemId +') has been inserted.');
+logger.debug('Success: bids are added');
+
+
+
+// RATING table
+newDate = new Date();
+var rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'user2',
+    itemId: 1,
+    numberOfStars: 5,
+    comment: 'Great GPS!'
+};
+
+var insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    username: 'user3',
+    itemId: 1,
+    numberOfStars: 2,
+    comment: 'Not so great GPS!'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
+    username: 'user4',
+    itemId: 1,
+    numberOfStars: 4,
+    comment: 'A favorite of mine.'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'user1',
+    itemId: 4,
+    numberOfStars: 1,
+    comment: 'Go for the Italian stuff instead.'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    username: 'admin1',
+    itemId: 6,
+    numberOfStars: 1,
+    comment: 'Not recommended.'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    username: 'user1',
+    itemId: 6,
+    numberOfStars: 3,
+    comment: 'This book is okay.'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+rate = {
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    username: 'user2',
+    itemId: 6,
+    numberOfStars: 5,
+    comment: 'I learned SQL in 8 minutes!'
+};
+
+insertQueryRate = "INSERT INTO RATING ( \
+  `Rating_Datetime`, `Username`, `Item_ID`, `Number_Of_Stars`, `Comment` ) values (?,?,?,?,?)";
+
+connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
+
+
+logger.debug('Success: rates are added');
 
 connection.end();
