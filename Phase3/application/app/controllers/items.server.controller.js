@@ -312,7 +312,7 @@ exports.sale = function(req, res, done) {
                 item.condition = 'Poor';
         }
         
-        item.startingBid = results[0].Min_Sale_Price;
+        item.startingBid = results[0].Starting_Bid;
         item.minSalePrice = results[0].Min_Sale_Price;
         item.getItNowPrice = results[0].Get_It_Now_Price;
         
