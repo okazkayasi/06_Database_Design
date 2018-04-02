@@ -9,32 +9,40 @@ var config = require('../../config/config'),
 // View Category Report ================
 // =====================================
 exports.category = function(req, res) {
-    req.session.returnTo = req.url;	
+  
+  // if not admin, logout
+  if (req.user.position == null) {
+    req.logout();
+	return res.status(301).redirect('/');
+  }
+  
+  req.session.returnTo = req.url;	
 
-    var jsonResult;
+  var jsonResult;
 
-    reports.getCategoryReport(function(err, results) {
-        if (err) {
-            return done(err);			
-        } else {	
-            logger.debug(results);
-            jsonResult = results;	
+  reports.getCategoryReport(function(err, results) {
+      if (err) {
+          return done(err);			
+      } else {	
+          logger.debug(results);
+          jsonResult = results;	
 
-            res.render('report-category', {
-                title: 'Category Report',
-                menugroup: 'report',
-                submenu: 'category',
-                messages: '',
-                backUrl: req.url,
-                userid: req.user.username,
-                username: req.user.firstName + ' ' + req.user.lastName,
-                membersince: req.user.created,
-                sessionTimeOut: 'yes',
-                sessionTimeOutDuration: config.sessionTimeOutDuration
-            });
+          res.render('report-category', {
+              title: 'Category Report',
+              menugroup: 'report',
+              submenu: 'category',
+              messages: '',
+              backUrl: req.url,
+              userid: req.user.username,
+              username: req.user.firstName + ' ' + req.user.lastName,
+              position: req.user.position,
+              membersince: req.user.created,
+              sessionTimeOut: 'yes',
+              sessionTimeOutDuration: config.sessionTimeOutDuration
+          });
 
-        }
-    });
+      }
+  });
 
 };
 
@@ -42,31 +50,38 @@ exports.category = function(req, res) {
 // View User Report ================
 // =====================================
 exports.user = function(req, res) {
-    req.session.returnTo = req.url;	
+  // if not admin, logout
+  if (req.user.position == null) {
+    req.logout();
+	return res.status(301).redirect('/');
+  }
+  
+  req.session.returnTo = req.url;	
 
-    var jsonResult;
+  var jsonResult;
 
-    reports.getUserReport(function(err, results) {
-        if (err) {
-            return done(err);			
-        } else {	
-            logger.debug(results);
-            jsonResult = results;	
+  reports.getUserReport(function(err, results) {
+      if (err) {
+          return done(err);			
+      } else {	
+          logger.debug(results);
+          jsonResult = results;	
 
-            res.render('report-user', {
-                title: 'User Report',
-                menugroup: 'report',
-                submenu: 'user',
-                messages: '',
-                backUrl: req.url,
-                userid: req.user.username,
-                username: req.user.firstName + ' ' + req.user.lastName,
-                membersince: req.user.created,
-                sessionTimeOut: 'yes',
-                sessionTimeOutDuration: config.sessionTimeOutDuration
-            });
+          res.render('report-user', {
+              title: 'User Report',
+              menugroup: 'report',
+              submenu: 'user',
+              messages: '',
+              backUrl: req.url,
+              userid: req.user.username,
+              username: req.user.firstName + ' ' + req.user.lastName,
+              position: req.user.position,
+              membersince: req.user.created,
+              sessionTimeOut: 'yes',
+              sessionTimeOutDuration: config.sessionTimeOutDuration
+          });
 
-        }
-    });
+      }
+  });
 
 };

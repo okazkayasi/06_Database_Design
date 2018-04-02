@@ -75,6 +75,7 @@ CREATE TABLE `ITEM` ( \
   `Auction_End_Datetime` Timestamp NOT NULL, \
   `Category` varchar(100) NOT NULL, \
   `Lister_Name` varchar(250) NOT NULL, \
+  `Starting_Bid` Decimal(19,2) NOT NULL, \
   PRIMARY KEY (`ITEM_ID`), \
   FOREIGN KEY (`Lister_Name`) REFERENCES USER (`Username`), \
   FOREIGN KEY (`Category`) REFERENCES CATEGORY (`Category_Name`) \
@@ -259,14 +260,15 @@ var item = {
     Get_It_Now_Price: 99,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user1'
+    Lister_Name: 'user1',
+    Starting_Bid: 50
 };
 
 insertQuery = "INSERT INTO ITEM ( \
   `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name`, `Starting_Bid` ) values (?,?,?,?,?,?,?,?,?,?,?)";
 
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 5;
@@ -280,14 +282,11 @@ item = {
     Get_It_Now_Price: 80,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user1'
+    Lister_Name: 'user1',
+    Starting_Bid: 40
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 3;
@@ -301,14 +300,11 @@ item = {
     Get_It_Now_Price: 2000,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Electronics',
-    Lister_Name: 'user2'
+    Lister_Name: 'user2',
+    Starting_Bid: 1500
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 7;
@@ -322,14 +318,11 @@ item = {
     Get_It_Now_Price: 15,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Art',
-    Lister_Name: 'user3'
+    Lister_Name: 'user3',
+    Starting_Bid: 10
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 10;
@@ -343,14 +336,11 @@ item = {
     Get_It_Now_Price: 12,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
-    Lister_Name: 'admin1'
+    Lister_Name: 'admin1',
+    Starting_Bid: 5
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 6;
@@ -364,14 +354,11 @@ item = {
     Get_It_Now_Price: 10,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Books',
-    Lister_Name: 'admin2'
+    Lister_Name: 'admin2',
+    Starting_Bid: 5
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 newDate = new Date();
 addedDays = 4;
@@ -385,14 +372,11 @@ item = {
     Get_It_Now_Price: 40,
     Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
     Category: 'Sporting Goods',
-    Lister_Name: 'user6'
+    Lister_Name: 'user6',
+    Starting_Bid: 20
 };
 
-insertQuery = "INSERT INTO ITEM ( \
-  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) values (?,?,?,?,?,?,?,?,?,?)";
-
-connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name]);
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
 logger.debug('Success: items are added');
 

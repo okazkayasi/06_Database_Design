@@ -49,7 +49,7 @@ exports.signUp = function(req, username, password, done) {
 exports.signIn = function(req, username, password, done) {
     // find a user whose username and password are the same
     
-    db.query("SELECT * FROM USER WHERE Username = ?",[username],    function(err, rows){
+    db.query("SELECT u.*, a.Position FROM USER u LEFT JOIN ADMIN_USER a ON u.Username = a.Username WHERE u.Username = ?",[username], function(err, rows){
         if (err)
             return done(err);
         if (!rows.length) {
@@ -64,7 +64,8 @@ exports.signIn = function(req, username, password, done) {
         var user = {
                 username: rows[0].Username,
                 firstName: rows[0].First_Name,
-                lastName: rows[0].Last_Name
+                lastName: rows[0].Last_Name,
+                position: rows[0].Position
             };
 
         logger.debug('passport.use.local-login = ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')');

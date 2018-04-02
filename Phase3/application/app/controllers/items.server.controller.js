@@ -35,6 +35,7 @@ exports.auction = function(req, res) {
                     backUrl: req.url,
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
+                    position: req.user.position,
                     membersince: req.user.created,
                     sessionTimeOut: 'yes',
                     sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -63,6 +64,7 @@ exports.auction = function(req, res) {
                     backUrl: req.url,
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
+                    position: req.user.position,
                     membersince: req.user.created,
                     sessionTimeOut: 'yes',
                     sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -94,10 +96,11 @@ exports.search = function(req, res) {
                 menugroup: 'search',
                 submenu: '',
                 categories: jsonResult,
-                messages: '',
+                messages: req.flash('error') || req.flash('info'),
                 backUrl: req.url,
                 userid: req.user.username,
                 username: req.user.firstName + ' ' + req.user.lastName,
+                position: req.user.position,
                 membersince: req.user.created,
                 sessionTimeOut: 'yes',
                 sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -144,6 +147,7 @@ exports.searchResult = function(req, res, done) {
                 backUrl: req.url,
 				userid: req.user.username,
 				username: req.user.firstName + ' ' + req.user.lastName,
+                position: req.user.position,
 				membersince: req.user.created,
 				sessionTimeOut: 'yes',
 				sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -253,6 +257,7 @@ exports.insertUpdate = function(req, res, done) {
                     backUrl: req.url,
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
+                    position: req.user.position,
                     membersince: req.user.created,
                     sessionTimeOut: 'yes',
                     sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -337,6 +342,7 @@ exports.sale = function(req, res, done) {
                     backUrl: req.url,
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
+                    position: req.user.position,
                     membersince: req.user.created,
                     sessionTimeOut: 'yes',
                     sessionTimeOutDuration: config.sessionTimeOutDuration
@@ -376,6 +382,7 @@ exports.rate = function(req, res, done) {
                     backUrl: req.url,
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
+                    position: req.user.position,
                     membersince: req.user.created,
                     sessionTimeOut: 'yes',
                     sessionTimeOutDuration: config.sessionTimeOutDuration

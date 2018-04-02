@@ -38,7 +38,7 @@
                     <div class="register-box-body">                   
                     <!-- form start -->   
                     <form class="form-horizontal" action="/item/auction" method="post">  
-                        <input type="hidden" id="minSalePrice" value="<%=minSalePrice%>">
+                        <input type="hidden" id="startingBidPrice" value="<%=startingBid%>">
                       <div class="box-body">
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Item ID</label>
@@ -81,7 +81,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="myBidPrice" placeholder="minimum bid is $<%=minSalePrice%>" name="myBidPrice" onkeyup="checkBidPrice('myBidPrice','minSalePrice','confirmMessage','bidBtn'); return false;">
+                                <input type="text" class="form-control" id="myBidPrice" placeholder="minimum bid is $<%=startingBid%>" name="myBidPrice" onkeyup="checkBidPrice('myBidPrice','startingBidPrice','confirmMessage','bidBtn'); return false;">
                             </div>
                             <span id="confirmMessage" class="confirmMessage"></span>
                           </div>
@@ -136,7 +136,7 @@
         console.log('checkBidPrice..');
         //Store the bidding price field objects into variables ...
         var bidPrice = document.getElementById(p1);
-        var mimBidPrice = document.getElementById(p2);
+        var startingBidPrice = document.getElementById(p2);
 
         //Store the Confimation Message Object ...
         var message = document.getElementById(m);
@@ -149,7 +149,7 @@
         var badColor = "#ff6666";
         //Compare the values in the bidding price field 
         //and the confirmation field
-        if(bidPrice.value >= mimBidPrice.value){
+        if(bidPrice.value >= startingBidPrice.value){
             //The bidding price is valid.
             //Set the color to the good color and inform
             //the user that they have entered the valid price 
