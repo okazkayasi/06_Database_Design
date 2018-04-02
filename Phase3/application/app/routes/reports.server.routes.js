@@ -1,5 +1,5 @@
 /*
- request routing for ITEM related tasks
+ request routing for REPORT related tasks
 */
 
 var config = require('../../config/config'),

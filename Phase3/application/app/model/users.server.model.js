@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt-nodejs'),
     mysql = require('mysql'),
     dbconfig = require('../../config/mysql'),
     db = mysql.createConnection(dbconfig.connection),
+    sqls = require('./sqls.server.model'),
     logger = require('../../config/logger');
 
 // =====================================
@@ -14,7 +15,7 @@ exports.signUp = function(req, username, password, done) {
     // find a user whose username is the same as the forms username
     // we are checking to see if the user trying to login already exists
     
-    db.query("SELECT * FROM USER WHERE username = ?", [username], function(err, rows) {
+    db.query(sqls.user(1), [username], function(err, rows) {
         if (err)
             return done(err);
         if (rows.length) {
@@ -30,9 +31,7 @@ exports.signUp = function(req, username, password, done) {
                 lastName: req.body.lastName
             };
 
-            var insertQuery = "INSERT INTO USER ( Username, Password, First_Name, Last_Name ) values (?,?,?,?)";
-
-            db.query(insertQuery,[user.username, user.password, user.firstName, user.lastName],function(err, rows) {
+            db.query(sqls.user(2),[user.username, user.password, user.firstName, user.lastName],function(err, rows) {
                 if (err)
                   return done(err);
 
@@ -49,7 +48,7 @@ exports.signUp = function(req, username, password, done) {
 exports.signIn = function(req, username, password, done) {
     // find a user whose username and password are the same
     
-    db.query("SELECT u.*, a.Position FROM USER u LEFT JOIN ADMIN_USER a ON u.Username = a.Username WHERE u.Username = ?",[username], function(err, rows){
+    db.query(sqls.user(3),[username], function(err, rows){
         if (err)
             return done(err);
         if (!rows.length) {

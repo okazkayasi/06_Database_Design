@@ -1,5 +1,5 @@
 /*
- business logic for ITEM related tasks
+ business logic for REPORT related tasks
 */
 var config = require('../../config/config'),
     reports = require('../model/reports.server.model'),
