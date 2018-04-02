@@ -27,7 +27,7 @@
     "passport": "latest",
     "passport-local": "latest",
     "bcrypt-nodejs": "latest",
-    "sleep": "latest"
+    "system-sleep": "latest"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
