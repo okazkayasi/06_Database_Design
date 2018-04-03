@@ -9,9 +9,12 @@ var config = require('../../config/config'),
 // View Category Report ================
 // =====================================
 exports.category = function(req, res) {
+  logger.debug('req.user.position = ' + req.user.position);
   
   // if not admin, logout
   if (req.user.position == null) {
+    logger.debug('login user is not an admin');
+    
     req.logout();
 	return res.status(301).redirect('/');
   }
@@ -32,6 +35,7 @@ exports.category = function(req, res) {
               menugroup: 'report',
               submenu: 'category',
               messages: '',
+              results: jsonResult,
               backUrl: req.url,
               userid: req.user.username,
               username: req.user.firstName + ' ' + req.user.lastName,
@@ -72,6 +76,7 @@ exports.user = function(req, res) {
               menugroup: 'report',
               submenu: 'user',
               messages: '',
+              results: jsonResult,
               backUrl: req.url,
               userid: req.user.username,
               username: req.user.firstName + ' ' + req.user.lastName,

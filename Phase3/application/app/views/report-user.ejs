@@ -36,7 +36,28 @@
                     </div>
                     <!-- /.box-header -->
                     
-                    
+                    <div class="box-body table-responsive no-padding">
+                      <table id="items" class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Username</th>
+                          <th>Listed</th>
+                          <th>Sold</th>
+                          <th>Purchased</th>
+                          <th>Rated</th>
+                        </tr>
+                        </thead>                            
+                    <% for(var i = 0; i < results.length; i++) { %>
+                        <tr>
+                          <td><%=results[i].Username %></td>
+                          <td><%=results[i].Listed %></td>
+                          <td><%=results[i].Sold %></td>
+                          <td><%=results[i].Purchased %></td>
+                          <td><%=results[i].Rated %></td>
+                        </tr>
+                    <% } %>
+                     </table>
+                    </div>
                     
                   </div>
                   <!-- /.box -->

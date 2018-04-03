@@ -38,32 +38,31 @@
                     
                     <!-- form start -->
                     <form class="form-horizontal" action="/item/search">
-                        <!-- /.box-header -->
-                        <div class="box-body table-responsive no-padding">
-                          <table id="items" class="table table-hover">
-                            <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Item Name</th>
-                              <th>Current Bid</th>
-                              <th>High Bidder</th>
-                              <th>Get It Now Price</th>
-                              <th>Auction End</th>
-                            </tr>
-                            </thead>                            
-                        <% for(var i = 0; i < results.length; i++) { %>
-                            <tr>
-                              <td><%=results[i].Item_ID %></td>
-                              <td><a href="/item/sale?id=<%=results[i].Item_ID%>"><%=results[i].Item_Name %></a></td>
-                              <td><% if (results[i].Current_Bid == null) {%> - <%} else {%>$<%=results[i].Current_Bid %><%}%></td>
-                              <td><% if (results[i].Current_Bid == null) {%> - <%} else {%><%=results[i].Username %><%}%></td>
-                              <td>$<%=results[i].Get_It_Now_Price %></td>
-                              <td><%=results[i].Auction_End_Datetime %></td>
-                            </tr>
-                        <% } %>
-                         </table>
-                        </div>
-                        <!-- /.box-body -->
+                      <!-- /.box-header -->
+                      <div class="box-body table-responsive no-padding">
+                        <table id="items" class="table table-hover">
+                          <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Item Name</th>
+                            <th>Current Bid</th>
+                            <th>High Bidder</th>
+                            <th>Get It Now Price</th>
+                            <th>Auction End</th>
+                          </tr>
+                          </thead>                            
+                      <% for(var i = 0; i < results.length; i++) { %>
+                          <tr>
+                            <td><%=results[i].Item_ID %></td>
+                            <td><a href="/item/sale?id=<%=results[i].Item_ID%>"><%=results[i].Item_Name %></a></td>
+                            <td><% if (results[i].Current_Bid == null) {%> - <%} else {%>$<%=results[i].Current_Bid %><%}%></td>
+                            <td><% if (results[i].Current_Bid == null) {%> - <%} else {%><%=results[i].Username %><%}%></td>
+                            <td>$<%=results[i].Get_It_Now_Price %></td>
+                            <td><%=results[i].Auction_End_Datetime %></td>
+                          </tr>
+                      <% } %>
+                       </table>
+                      </div>
                       <!-- /.box-body -->
                       <div class="box-footer">
                         <button type="submit" class="btn btn-info pull-right" id='searchBtn'>Back to Search</button>

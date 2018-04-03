@@ -12,7 +12,8 @@ var mysql = require('mysql'),
 // Retrieve category report ============
 // =====================================
 exports.getCategoryReport = function(done) {
-
+  logger.debug('SQL = ' + sqls.report(1));
+  
   db.query(sqls.report(1), function (err, rows) {
     if (err) return done(err)
     done(null, rows)
@@ -23,8 +24,9 @@ exports.getCategoryReport = function(done) {
 // Retrieve user report ============
 // =====================================
 exports.getUserReport = function(done) {
-    
-  db.query(sqls.report(1), function (err, rows) {
+  logger.debug('SQL = ' + sqls.report(2));
+  
+  db.query(sqls.report(2), function (err, rows) {
     if (err) return done(err)
     done(null, rows)
   })

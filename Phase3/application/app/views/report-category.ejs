@@ -36,7 +36,28 @@
                     </div>
                     <!-- /.box-header -->
                     
-                    
+                    <div class="box-body table-responsive no-padding">
+                      <table id="items" class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Category</th>
+                          <th>Total Items</th>
+                          <th>Min Price</th>
+                          <th>Max Price</th>
+                          <th>Average Price</th>
+                        </tr>
+                        </thead>                            
+                    <% for(var i = 0; i < results.length; i++) { %>
+                        <tr>
+                          <td><%=results[i].Category %></td>
+                          <td><%=results[i].Sum_Items %></td>
+                          <td><%=results[i].Min_Price %></td>
+                          <td><%=results[i].Max_Price %></td>
+                          <td><%=results[i].Avg_Price %></td>
+                        </tr>
+                    <% } %>
+                     </table>
+                    </div>
                     
                   </div>
                   <!-- /.box -->
