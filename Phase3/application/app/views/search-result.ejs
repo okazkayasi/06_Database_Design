@@ -46,6 +46,7 @@
                               <th>ID</th>
                               <th>Item Name</th>
                               <th>Current Bid</th>
+                              <th>High Bidder</th>
                               <th>Get It Now Price</th>
                               <th>Auction End</th>
                             </tr>
@@ -54,7 +55,8 @@
                             <tr>
                               <td><%=results[i].Item_ID %></td>
                               <td><a href="/item/sale?id=<%=results[i].Item_ID%>"><%=results[i].Item_Name %></a></td>
-                              <td>$<%=results[i].Min_Sale_Price %></td>
+                              <td><% if (results[i].Current_Bid == null) {%> - <%} else {%>$<%=results[i].Current_Bid %><%}%></td>
+                              <td><% if (results[i].Current_Bid == null) {%> - <%} else {%><%=results[i].Username %><%}%></td>
                               <td>$<%=results[i].Get_It_Now_Price %></td>
                               <td><%=results[i].Auction_End_Datetime %></td>
                             </tr>

@@ -45,7 +45,13 @@ exports.item = function(queryId) {
       break;
     case 4:  // search ITEM(s) by multiple conditions
             // conditions are managed in the business logic
-      return "SELECT * FROM ITEM WHERE 1=1 ";
+      return "SELECT i.Item_ID, i.Item_Name, b.Current_Bid, b2.Username, i.Get_It_Now_Price, i.Auction_End_Datetime \
+              FROM ITEM i LEFT JOIN \
+                (SELECT Item_ID, MAX(Bid_Amount) Current_Bid FROM BID GROUP BY Item_ID) b \
+                ON i.Item_ID = b.Item_ID LEFT JOIN \
+                BID b2 ON b.Item_ID = b2.Item_ID AND b.Current_Bid = b2.Bid_Amount \
+              WHERE ? \
+              ORDER BY i.Auction_End_Datetime";
       break;
     default:
       return "";

@@ -11,7 +11,7 @@ var config = require('../../config/config'),
 exports.auction = function(req, res) {
     req.session.returnTo = req.url;	
 
-    if (req.query.id != null) {
+    if (req.query.id != null) { // description editing mode
         var item = {
             itemid: req.query.id
         }
@@ -42,7 +42,7 @@ exports.auction = function(req, res) {
                 });
 
         });
-    } else {
+    } else {  // a form to add a new ITEM
     
         var jsonResult;
 
@@ -116,45 +116,71 @@ exports.search = function(req, res) {
 // Display Search Results View =========
 // =====================================
 exports.searchResult = function(req, res, done) {
+  var k, c, min, max, cond;
+  
+  if (req.body.keyword == null)
+    k = '';
+  else
+    k = req.body.keyword;
+  
+  if (req.body.category == null)
+    c = '';
+  else
+    c = req.body.category;
+  
+  if (req.body.minSalePrice == null)
+    min = '';
+  else
+    min = req.body.minSalePrice;
+  
+  if (req.body.maxSalePrice == null)
+    max = '';
+  else
+    max = req.body.maxSalePrice;
 	
-    var item = {
-        keyword: req.body.keyword,
-        category: req.body.category,
-        minAuctionPrice: Number(req.body.minSalePrice),
-        maxAuctionPrice: Number(req.body.maxSalePrice),
-        condition: Number(req.body.condition)
-    };
-    
-    logger.debug(item);
-    
-    var jsonResult;
-    
-    items.getItems(item, function(err, results) {
-		if (err) {
-			return done(err);			
-		} else {	
-            logger.debug(results);
-			jsonResult = results;	
-            
-            req.session.returnTo = req.url;	
-	
-            res.render('search-result', {
-				title: 'Item Search Result',
-                menugroup: 'search',
-                submenu: '',
-                results: jsonResult,
-                messages: '',
-                backUrl: req.url,
-				userid: req.user.username,
-				username: req.user.firstName + ' ' + req.user.lastName,
-                position: req.user.position,
-				membersince: req.user.created,
-				sessionTimeOut: 'yes',
-				sessionTimeOutDuration: config.sessionTimeOutDuration
-			});
-    
-		}
-	});
+  if (req.body.condition == null)
+    cond = '';
+  else
+    cond = req.body.condition;
+  
+  var item = {
+      keyword: k,
+      category: c,
+      minAuctionPrice: Number(min),
+      maxAuctionPrice: Number(max),
+      condition: Number(cond)
+  };
+
+  logger.debug(item);
+
+  var jsonResult;
+
+  items.getItems(item, function(err, results) {
+      if (err) {
+          return done(err);			
+      } else {	
+          logger.debug(results);
+          jsonResult = results;	
+
+          req.session.returnTo = req.url;	
+
+          res.render('search-result', {
+              title: 'Item Search Results',
+              menugroup: 'sale',
+              submenu: '',
+              results: jsonResult,
+              messages: '',
+              backUrl: req.url,
+              userid: req.user.username,
+              username: req.user.firstName + ' ' + req.user.lastName,
+              position: req.user.position,
+              membersince: req.user.created,
+              sessionTimeOut: 'yes',
+              sessionTimeOutDuration: config.sessionTimeOutDuration
+          });
+
+      }
+  });
     
     
 	
