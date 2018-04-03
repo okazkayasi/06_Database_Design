@@ -29,6 +29,9 @@ module.exports = function(app, passport) {
 
   app.route('/item/list')
       .get(utils.ensureAuthenticated, items.searchResult);  // list the items for sale
+  
+  app.route('/item/result')
+      .get(utils.ensureAuthenticated, items.auctionResult);  // list the items for sale
 
   app.route('/item/sale-rate')
       .get(utils.ensureAuthenticated, items.rate);  // show the item rating form 

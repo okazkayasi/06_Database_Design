@@ -181,10 +181,48 @@ exports.searchResult = function(req, res, done) {
 
       }
   });
+	
+};
+
+
+// =====================================
+// Auction Results View ================
+// =====================================
+exports.auctionResult = function(req, res, done) {
+  var jsonResult;
+
+  items.getAuctionResults(req.user.username, function(err, results) {
+      if (err) {
+          return done(err);			
+      } else {	
+          logger.debug(results);
+          jsonResult = results;	
+
+          req.session.returnTo = req.url;	
+
+          res.render('auction-result', {
+              title: 'Auction Results',
+              menugroup: 'result',
+              submenu: '',
+              results: jsonResult,
+              messages: '',
+              backUrl: req.url,
+              userid: req.user.username,
+              username: req.user.firstName + ' ' + req.user.lastName,
+              position: req.user.position,
+              membersince: req.user.created,
+              sessionTimeOut: 'yes',
+              sessionTimeOutDuration: config.sessionTimeOutDuration
+          });
+
+      }
+  });
     
     
 	
 };
+
+
 
 // =====================================
 // Ajax retrieve Search Results ========
