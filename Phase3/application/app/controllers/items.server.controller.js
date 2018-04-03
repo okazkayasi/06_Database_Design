@@ -3,6 +3,7 @@
 */
 var config = require('../../config/config'),
     items = require('../model/items.server.model'),
+    bids = require('../model/bids.server.model'),
     logger = require('../../config/logger');
 
 // =====================================
@@ -334,6 +335,36 @@ exports.insertUpdate = function(req, res, done) {
     }
 	
 };
+
+
+// =====================================
+// Get it Now ==========================
+// =====================================
+exports.getItNow = function(req, res, done) {
+    req.session.returnTo = req.url;	
+    
+    // insert a new bid
+    if (req.query.id != '') {
+        
+        var newDate = new Date();
+        var item = {
+            itemid: req.query.id,
+            username: req.user.username
+        };
+
+        logger.debug(item);
+
+        bids.insert(req, item, function(err, results) {
+          if (!results) {
+            res.status(301).redirect('/item/sale?id=' + item.itemid);
+          } else {
+            res.status(301).redirect('/item/list');
+          }
+        });
+    } 
+	
+};
+
 
 // =====================================
 // ITEM DETAIL =========================

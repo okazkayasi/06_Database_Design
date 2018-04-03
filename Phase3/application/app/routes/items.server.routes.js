@@ -33,6 +33,9 @@ module.exports = function(app, passport) {
   app.route('/item/result')
       .get(utils.ensureAuthenticated, items.auctionResult);  // list the items for sale
 
+  app.route('/item/get-it-now')
+      .get(utils.ensureAuthenticated, items.getItNow);  // update the item and add a bid to close the auction for this item
+  
   app.route('/item/sale-rate')
       .get(utils.ensureAuthenticated, items.rate);  // show the item rating form 
   

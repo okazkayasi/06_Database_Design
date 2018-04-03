@@ -60,10 +60,10 @@ exports.item = function(queryId) {
     case 5:  // search ITEM(s), of which auction end dates are passed
       return "SELECT i.Item_ID, i.Item_Name, b.Current_Bid, b2.Username, i.Get_It_Now_Price, i.Auction_End_Datetime \
               FROM ITEM i LEFT JOIN \
-                (SELECT Item_ID, MAX(Bid_Amount) Current_Bid \
-                  FROM BID \
-                  WHERE MAX(Bid_Amount) >= i.Min_Sale_Price \
-                  GROUP BY Item_ID) b \
+                (SELECT BID.Item_ID, ITEM.Min_Sale_Price, MAX(Bid_Amount) Current_Bid \
+	               FROM BID JOIN ITEM ON BID.Item_ID = ITEM.Item_ID \
+	               GROUP BY BID.Item_ID \
+	               HAVING MAX(Bid_Amount) >= ITEM.Min_Sale_Price) b \
                 ON i.Item_ID = b.Item_ID LEFT JOIN \
                 BID b2 ON b.Item_ID = b2.Item_ID AND b.Current_Bid = b2.Bid_Amount \
               WHERE i.Auction_End_Datetime < NOW() AND i.Lister_Name = ? \
@@ -74,6 +74,37 @@ exports.item = function(queryId) {
   }
   
 }
+
+
+// =====================================
+// SQL queries related to BID ==========
+// =====================================
+exports.bid = function(queryId) {
+    
+  switch (queryId) {
+    case 1:  // check if the auction time for this item has already been expired
+      return "SELECT * \
+            FROM ITEM \
+            WHERE Auction_End_Datetime > NOW() AND Item_ID = ?";
+      break;
+    case 2:  // add a new BID with get it now price
+      return "INSERT INTO BID ( \
+              `Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount` ) \
+            SELECT Now(), ?, Item_ID, Get_It_Now_Price \
+            FROM ITEM \
+            WHERE Item_ID = ?";
+      break;
+    case 3:  // update the item's Auction_End_Datetime to now
+      return "UPDATE ITEM \
+              SET `Auction_End_Datetime` = Now() \
+            WHERE Item_ID = ?";
+      break;
+    default:
+      return "";
+  }
+  
+}
+
 
 // =====================================
 // SQL queries related to CATEGORY =====
