@@ -69,6 +69,14 @@ exports.item = function(queryId) {
               WHERE i.Auction_End_Datetime < NOW() AND i.Lister_Name = ? \
               ORDER BY i.Auction_End_Datetime DESC";
       break;
+    case 6:  // update the item's Auction_End_Datetime to now
+      return "UPDATE ITEM \
+              SET `Auction_End_Datetime` = Now() \
+            WHERE Item_ID = ?";
+      break;
+    case 7:  // search an ITEM by Lister_Name
+      return "SELECT * FROM ITEM WHERE `Lister_Name`=? AND `Item_ID`=?"
+      break;
     default:
       return "";
   }
@@ -94,11 +102,7 @@ exports.bid = function(queryId) {
             FROM ITEM \
             WHERE Item_ID = ?";
       break;
-    case 3:  // update the item's Auction_End_Datetime to now
-      return "UPDATE ITEM \
-              SET `Auction_End_Datetime` = Now() \
-            WHERE Item_ID = ?";
-      break;
+    
     default:
       return "";
   }

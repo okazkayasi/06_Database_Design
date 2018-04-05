@@ -435,6 +435,7 @@ exports.sale = function(req, res, done) {
                     getItNowPrice: item.getItNowPrice,
                     returnable: item.returnable,
                     backUrl: req.url,
+                    messages: req.flash('error') || req.flash('info'),
                     userid: req.user.username,
                     username: req.user.firstName + ' ' + req.user.lastName,
                     position: req.user.position,

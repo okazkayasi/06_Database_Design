@@ -35,6 +35,15 @@
                     </div>
                     <!-- /.box-header -->
                     
+                    <% if (messages[0]) { %>
+                    <div class="callout callout-danger">
+                      <h4><i class="fa fa-warning"></i> Errors:</h4>
+                      <% for(var i in messages) { %>
+                        <div class="flash"><%= messages[i] %></div>
+                      <% } %>
+                    </div>
+                    <% } %>
+                    
                     <div class="register-box-body">                   
                     <!-- form start -->   
                     <form class="form-horizontal" action="/item/auction" method="post">  
