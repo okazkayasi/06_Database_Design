@@ -161,22 +161,32 @@ exports.report = function(queryId) {
               GROUP BY Category";
       break;
     case 2:  // get all users group by listed items, sold items, purchased items, rated items
-      // TODO: SQL needs to be revised !!!!!!!!!*************************
-        return"SELECT * FROM ((SELECT * FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
-                              UNION\
-                              SELECT * FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS A1\
-                        NATURAL LEFT OUTER JOIN\
-                              (SELECT * FROM LISTED NATURAL LEFT OUTER JOIN RATED\
-                               UNION\
-                               SELECT * FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS A2)\
+        return"SELECT Username, Listed, Sold, Purchased, Rated \
+               FROM ((SELECT Username, Sold, Purchased\
+                      FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
+                      UNION\
+                      SELECT Username, Sold, Purchased\
+                      FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS A1\
+                      NATURAL LEFT OUTER JOIN\
+                     (SELECT Username, Listed, Rated\
+                      FROM LISTED NATURAL LEFT OUTER JOIN RATED\
+                      UNION\
+                      SELECT Username, Listed, Rated\
+                      FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS A2)\
                UNION\
-               SELECT * FROM ((SELECT * FROM LISTED NATURAL LEFT OUTER JOIN RATED\
-                               UNION\
-                               SELECT * FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS B1\
-                        NATURAL LEFT OUTER JOIN\
-                               (SELECT * FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
-                                UNION\
-                                SELECT * FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS B2)";
+               SELECT Username, Listed, Sold, Purchased, Rated\
+               FROM ((SELECT Username, Listed, Rated\
+                      FROM LISTED NATURAL LEFT OUTER JOIN RATED\
+                      UNION\
+                      SELECT Username, Listed, Rated\
+                      FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS B1\
+                      NATURAL LEFT OUTER JOIN\
+                     (SELECT Username, Sold, Purchased\
+                      FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
+                      UNION\
+                      SELECT Username, Sold, Purchased\
+                      FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS B2)\
+               ORDER BY Username";
         break;
     default:
       return "";

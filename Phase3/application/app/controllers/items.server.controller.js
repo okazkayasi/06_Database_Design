@@ -290,7 +290,7 @@ exports.insertUpdate = function(req, res, done) {
             itemid: req.body.itemId,
             myBidPrice: req.body.myBidPrice
         };
-
+        logger.debug(JSON.stringify(req.body.myBidPrice))
         logger.debug(item);
         
         items.insert(req, item, function(err, results) {
@@ -391,16 +391,16 @@ exports.sale = function(req, res, done) {
         item.category = results[0].Category;
         
         switch (results[0].Cond) {
-            case 1:
+            case 5:
                 item.condition = 'New';
                 break;
-            case 2:
+            case 4:
                 item.condition = 'Very Good';
                 break;
             case 3:
                 item.condition = 'Good';
                 break;
-            case 4:
+            case 2:
                 item.condition = 'Fair';
                 break;
             default:
