@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Description</label>
-                          <div class="col-sm-9"><%=description%> &nbsp; <button type="button" onClick="window.location.href='/item/auction?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>Edit Description</button></div>
+                          <div class="col-sm-9"><%=description%> &nbsp; <%=listerName%>|<%=userid%><% if (listerName != userid) {%><button type="button" onClick="window.location.href='/item/auction?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>Edit Description</button><% } %></div>
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Category</label>
@@ -76,7 +76,7 @@
                         <% if (getItNowPrice > 0) {%>
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Get It Now price</label>
-                          <div class="col-sm-9">$<%=getItNowPrice%> &nbsp; <button type="button" onClick="window.location.href='/item/get-it-now?id=<%=itemId%>'" class="btn btn-default">Get it Now!</button>
+                          <div class="col-sm-9">$<%=getItNowPrice%> &nbsp; <% if (listerName != userid) {%><button type="button" onClick="window.location.href='/item/get-it-now?id=<%=itemId%>'" class="btn btn-default">Get it Now!</button><% } %>
                           </div>
                         </div>
                         <% } %>

@@ -111,42 +111,7 @@ CREATE TABLE RATING ( \
 )');
 logger.debug('Success: RATING table Created!')
 
-connection.query("CREATE VIEW LISTED AS\
-                  SELECT Lister_Name AS Username, Listed\
-                  FROM (SELECT Lister_Name, COUNT(*) AS Listed\
-                        FROM ITEM\
-                        GROUP BY Lister_Name) AS Q");
 
-connection.query("CREATE VIEW SOLD AS \
-                  SELECT Lister_Name AS Username, COUNT(Item_ID) AS Sold\
-                  FROM (SELECT DISTINCT ITEM.Lister_Name, ITEM.Item_ID\
-                        FROM   BID, ITEM\
-                        WHERE  NOW() > ITEM.Auction_End_Datetime AND\
-                        BID.Bid_Amount > ITEM.Min_Sale_Price AND\
-                        BID.Item_ID = ITEM.Item_ID) AS P\
-                  GROUP BY Lister_Name");
-
-connection.query("CREATE VIEW PURCHASED AS \
-                  SELECT Current_Bidder AS Username, COUNT(*) AS Purchased\
-                  FROM   (SELECT ITEM.Item_ID, Item_Name, Q.Highest_Bid, Current_Bidder\
-                          FROM ITEM JOIN (SELECT DISTINCT BID.Item_ID, Bid_Amount AS Highest_Bid,\
-                                          Username AS Current_Bidder\
-                                          FROM   BID, ITEM\
-                                          WHERE ITEM.Min_Sale_Price <= BID.Bid_Amount\
-                                                AND BID.Item_ID = ITEM.Item_ID\
-                                                AND (BID.Item_ID, Bid_Amount)\
-                                                IN(SELECT BID.Item_ID,MAX(Bid_Amount)AS MaxPrice\
-                                                   FROM  BID GROUP BY  BID.Item_ID)) AS Q\
-                                                   WHERE ITEM.Item_ID = Q.Item_ID AND\
-                                                   NOW() > ITEM.Auction_End_Datetime) AS P\
-                  GROUP BY Current_Bidder");
-
-connection.query("CREATE VIEW RATED AS\
-                  SELECT   Username, COUNT(Item_ID) AS Rated\
-                  FROM     (SELECT DISTINCT RATING.Username, ITEM.Item_ID\
-                            FROM   RATING, ITEM\
-                            WHERE  RATING.Item_ID = ITEM.Item_ID) AS P\
-                  GROUP BY Username");
 
 // ---- Inserting Sample Data ---
 // USER table
@@ -635,5 +600,46 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 logger.debug('Success: rates are added');
+
+
+
+connection.query("CREATE VIEW LISTED AS \
+                  SELECT Lister_Name, COUNT(*) AS Listed \
+                  FROM ITEM \
+                GROUP BY Lister_Name");
+
+/*
+connection.query("CREATE VIEW SOLD AS \
+                  SELECT Lister_Name AS Username, COUNT(Item_ID) AS Sold\
+                  FROM (SELECT DISTINCT ITEM.Lister_Name, ITEM.Item_ID\
+                        FROM   BID, ITEM\
+                        WHERE  NOW() > ITEM.Auction_End_Datetime AND\
+                        BID.Bid_Amount > ITEM.Min_Sale_Price AND\
+                        BID.Item_ID = ITEM.Item_ID) AS P\
+                  GROUP BY Lister_Name");
+
+connection.query("CREATE VIEW PURCHASED AS \
+                  SELECT Current_Bidder AS Username, COUNT(*) AS Purchased\
+                  FROM   (SELECT ITEM.Item_ID, Item_Name, Q.Highest_Bid, Current_Bidder\
+                          FROM ITEM JOIN (SELECT DISTINCT BID.Item_ID, Bid_Amount AS Highest_Bid,\
+                                          Username AS Current_Bidder\
+                                          FROM   BID, ITEM\
+                                          WHERE ITEM.Min_Sale_Price <= BID.Bid_Amount\
+                                                AND BID.Item_ID = ITEM.Item_ID\
+                                                AND (BID.Item_ID, Bid_Amount)\
+                                                IN(SELECT BID.Item_ID,MAX(Bid_Amount)AS MaxPrice\
+                                                   FROM  BID GROUP BY  BID.Item_ID)) AS Q\
+                                                   WHERE ITEM.Item_ID = Q.Item_ID AND\
+                                                   NOW() > ITEM.Auction_End_Datetime) AS P\
+                  GROUP BY Current_Bidder");
+
+connection.query("CREATE VIEW RATED AS\
+                  SELECT   Username, COUNT(Item_ID) AS Rated\
+                  FROM     (SELECT DISTINCT RATING.Username, ITEM.Item_ID\
+                            FROM   RATING, ITEM\
+                            WHERE  RATING.Item_ID = ITEM.Item_ID) AS P\
+                  GROUP BY Username");
+*/
+logger.debug('Success: views are added');
 
 connection.end();

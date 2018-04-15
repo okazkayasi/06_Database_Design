@@ -3,7 +3,7 @@ module.exports = {
 	dbHost: 'localhost',
     dbPort: '3306',
     dbUser: 'root',
-    dbPassword: 'Sogut8090',
+    dbPassword: 'root',
     db: 'gt_bay',
 	sessionSecret: 'developmentSessionSecret',
     sessionTimeOutDuration: 3600000,

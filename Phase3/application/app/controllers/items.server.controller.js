@@ -417,6 +417,7 @@ exports.sale = function(req, res, done) {
         item.startingBid = results[0].Starting_Bid;
         item.minSalePrice = results[0].Min_Sale_Price;
         item.getItNowPrice = results[0].Get_It_Now_Price;
+        item.listerName = results[0].Lister_Name;
         
         if (results[0].Returnable)
             item.returnable = "Yes";
@@ -441,6 +442,7 @@ exports.sale = function(req, res, done) {
                     auctionLength: item.auctionEndTime,
                     getItNowPrice: item.getItNowPrice,
                     returnable: item.returnable,
+                    listerName: item.listerName,
                     backUrl: req.url,
                     messages: req.flash('error') || req.flash('info'),
                     userid: req.user.username,
