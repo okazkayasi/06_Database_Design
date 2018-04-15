@@ -35,9 +35,9 @@ exports.item = function(queryId) {
   switch (queryId) {
     case 1:  // add a new ITEM
       return "INSERT INTO ITEM ( \
-              `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
-              `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name` ) \
-            values (?,?,?,?,?,?,?,?,?,?)";
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name`, `Starting_Bid` ) values (?,?,?,?,?,?,?,?,?,?,?)";
+
       break;
     case 2:  // search an ITEM by item_id
       return "SELECT * FROM ITEM WHERE `Item_ID`=?"

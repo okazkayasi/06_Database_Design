@@ -21,10 +21,10 @@ exports.auction = function(req, res) {
 
         items.getItem(item, function(err, results) {
             logger.debug(results);    
-            //item = JSON.parse(results);
+            item = JSON.parse(results);
 
-            item.description = results[0].Description;
-            logger.debug('results[0].Description = ' + results[0].Description);    
+            item.description = results[0].description;
+            logger.debug('results[0].Description = ' + results[0].description);
             
             res.render('auction', {
                     title: 'Edit Item',
@@ -263,19 +263,26 @@ exports.insertUpdate = function(req, res, done) {
         
         var newDate = new Date();
         var addedDays = req.body.auctionLength;
-
+        var a;
+        if (Number(req.body.getItNowPrice) == 0){
+            a = null;
+        }
+        else{
+            a = Number(req.body.getItNowPrice);
+        }
         var item = {
             itemid: req.body.itemId,
             itemname: req.body.itemName,
             description: req.body.description,
             Cond: Number(req.body.condition),
             Returnable: (req.body.returnable === "true"),
-            Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+            Auction_Start_Datetime: new Date(newDate.getTime()).toISOString().substring(0,19).replace('T',' '),
             Min_Sale_Price: Number(req.body.minSalePrice),
-            Get_It_Now_Price: Number(req.body.getItNowPrice),
-            Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+            Get_It_Now_Price: a,
+            Auction_End_Datetime: new Date(newDate.setTime(newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
             Category: req.body.category,
-            Lister_Name: req.user.username
+            Lister_Name: req.user.username,
+            Starting_Bid: req.body.startingBid
         };
 
         logger.debug(item);

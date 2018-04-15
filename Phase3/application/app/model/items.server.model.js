@@ -13,9 +13,8 @@ var mysql = require('mysql'),
 exports.insert = function(req, item, done) {
   logger.debug('SQL = ' + sqls.item(1));
   logger.debug(JSON.stringify(item));
-
-
-  db.query(sqls.item(1),[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name], function(err, rows) {
+  logger.debug('start = ' + item.Starting_Bid);
+  db.query(sqls.item(1),[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid], function(err, rows) {
   logger.debug(JSON.stringify(item));
     if (err) return done(err)
     done(null, rows.insertId)
