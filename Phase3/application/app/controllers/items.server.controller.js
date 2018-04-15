@@ -270,10 +270,10 @@ exports.insertUpdate = function(req, res, done) {
             description: req.body.description,
             Cond: Number(req.body.condition),
             Returnable: (req.body.returnable === "true"),
-            Auction_Start_Datetime: new Date().toISOString(),
+            Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
             Min_Sale_Price: Number(req.body.minSalePrice),
             Get_It_Now_Price: Number(req.body.getItNowPrice),
-            Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+            Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
             Category: req.body.category,
             Lister_Name: req.user.username
         };
@@ -281,7 +281,7 @@ exports.insertUpdate = function(req, res, done) {
         logger.debug(item);
         
         items.insert(req, item, function(err, results) {
-
+            console.log(JSON.stringify(results));
             res.status(301).redirect('/item/sale?id=' + results);
 
         });
@@ -294,7 +294,7 @@ exports.insertUpdate = function(req, res, done) {
         logger.debug(item);
         
         items.insert(req, item, function(err, results) {
-
+            console.log(JSON.stringify(results));
             res.status(301).redirect('/item/sale?id=' + results);
 
         });

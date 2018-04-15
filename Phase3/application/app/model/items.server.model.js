@@ -12,9 +12,11 @@ var mysql = require('mysql'),
 // =====================================
 exports.insert = function(req, item, done) {
   logger.debug('SQL = ' + sqls.item(1));
-  
-  db.query(sqls.item(1),[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price,               item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name], function(err, rows) {
-        
+  logger.debug(JSON.stringify(item));
+
+
+  db.query(sqls.item(1),[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name], function(err, rows) {
+  logger.debug(JSON.stringify(item));
     if (err) return done(err)
     done(null, rows.insertId)
   })
@@ -26,7 +28,7 @@ exports.insert = function(req, item, done) {
 exports.update = function(req, item, done) {
   logger.debug('items.server.model.update: start = ' + item.itemid);
   logger.debug('SQL = ' + sqls.item(2));
-
+  db.query("use gt_bay");
   db.query(sqls.item(2), [item.itemid], function (err, rows) {
       if (err) return done(err)
       if (!rows.length) {
@@ -76,16 +78,16 @@ exports.getItem = function(item, done) {
 // Retrieve searched ITEMS =============
 // =====================================
 exports.getItems = function(item, done) {
-  var selectQuery = '1=1 '; // = sqls.item(4);  //"SELECT * FROM ITEM WHERE 1=1 ";
+  //var selectQuery = '1=1 '; // = sqls.item(4);  //"SELECT * FROM ITEM WHERE 1=1 ";
 
-  logger.debug('SQL = ' + sqls.item(4));
-
+  logger.debug('This one SQL = ' + sqls.item(4));
+/*
   if (item.keyword != '') {
      selectQuery = selectQuery + "AND (`Item_Name` LIKE '%" + db.escape(item.keyword) + "%'  \
 OR `Description` LIKE '%" + db.escape(item.keyword) + "%') "; 
   }
   if (item.category != '') {
-     selectQuery = selectQuery + "AND `Category` = '" + db.escape(item.category) + "'"; 
+     selectQuery = selectQuery + "AND `Category` = '" + db.escape(item.category) + "'";
   }
   if (item.condition != '') {
      selectQuery = selectQuery + "AND `Cond` <= " + db.escape(item.condition); 
@@ -96,11 +98,32 @@ OR `Description` LIKE '%" + db.escape(item.keyword) + "%') ";
   if (item.maxAuctionPrice > 0) {
      selectQuery = selectQuery + "AND `Min_Sale_Price` >= " + db.escape(item.maxAuctionPrice); 
   }
+*/
 
-  logger.debug('SQL = ' + selectQuery);
+  var selectQuery = [item.condition, item.maxAuctionPrice,
+      item.minAuctionPrice, "%"+item.keyword+"%" , "%"+item.keyword+"%", item.category,
+      item.category]
+  if (item.maxAuctionPrice == 0){
+      selectQuery = [item.condition, 9999999999,
+          item.minAuctionPrice, "%"+item.keyword+"%" , "%"+item.keyword+"%", item.category,
+          item.category]
+  }  else if (item.minAuctionPrice == 0){
+      selectQuery = [item.condition, item.maxAuctionPrice,
+          -1, "%"+item.keyword+"%" , "%"+item.keyword+"%", item.category,
+          item.category]
+  } else if (item.minAuctionPrice == 0 && item.maxAuctionPrice == 0){
+    selectQuery = [item.condition, 9999999999,
+        -1, "%"+item.keyword+"%" , "%"+item.keyword+"%", item.category,
+        item.category]
+  }
 
 
-  db.query(sqls.item(4), [selectQuery], function (err, rows) {
+
+
+  logger.debug('question marks = ' + selectQuery);
+
+
+  db.query(sqls.item(4), selectQuery, function (err, rows) {
       if (err) return done(err)
       done(null, rows)
   })
@@ -113,7 +136,7 @@ OR `Description` LIKE '%" + db.escape(item.keyword) + "%') ";
 exports.getAuctionResults = function(username, done) {
   logger.debug('SQL = ' + sqls.item(5));
 
-  db.query(sqls.item(5), [username], function (err, rows) {
+  db.query(sqls.item(5), function (err, rows) {
       if (err) return done(err)
       done(null, rows)
   })

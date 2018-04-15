@@ -111,6 +111,43 @@ CREATE TABLE RATING ( \
 )');
 logger.debug('Success: RATING table Created!')
 
+connection.query("CREATE VIEW LISTED AS\
+                  SELECT Lister_Name AS Username, Listed\
+                  FROM (SELECT Lister_Name, COUNT(*) AS Listed\
+                        FROM ITEM\
+                        GROUP BY Lister_Name) AS Q");
+
+connection.query("CREATE VIEW SOLD AS \
+                  SELECT Lister_Name AS Username, COUNT(Item_ID) AS Sold\
+                  FROM (SELECT DISTINCT ITEM.Lister_Name, ITEM.Item_ID\
+                        FROM   BID, ITEM\
+                        WHERE  NOW() > ITEM.Auction_End_Datetime AND\
+                        BID.Bid_Amount > ITEM.Min_Sale_Price AND\
+                        BID.Item_ID = ITEM.Item_ID) AS P\
+                  GROUP BY Lister_Name");
+
+connection.query("CREATE VIEW PURCHASED AS \
+                  SELECT Current_Bidder AS Username, COUNT(*) AS Purchased\
+                  FROM   (SELECT ITEM.Item_ID, Item_Name, Q.Highest_Bid, Current_Bidder\
+                          FROM ITEM JOIN (SELECT DISTINCT BID.Item_ID, Bid_Amount AS Highest_Bid,\
+                                          Username AS Current_Bidder\
+                                          FROM   BID, ITEM\
+                                          WHERE ITEM.Min_Sale_Price <= BID.Bid_Amount\
+                                                AND BID.Item_ID = ITEM.Item_ID\
+                                                AND (BID.Item_ID, Bid_Amount)\
+                                                IN(SELECT BID.Item_ID,MAX(Bid_Amount)AS MaxPrice\
+                                                   FROM  BID GROUP BY  BID.Item_ID)) AS Q\
+                                                   WHERE ITEM.Item_ID = Q.Item_ID AND\
+                                                   NOW() > ITEM.Auction_End_Datetime) AS P\
+                  GROUP BY Current_Bidder");
+
+connection.query("CREATE VIEW RATED AS\
+                  SELECT   Username, COUNT(Item_ID) AS Rated\
+                  FROM     (SELECT DISTINCT RATING.Username, ITEM.Item_ID\
+                            FROM   RATING, ITEM\
+                            WHERE  RATING.Item_ID = ITEM.Item_ID) AS P\
+                  GROUP BY Username");
+
 // ---- Inserting Sample Data ---
 // USER table
 var user = {
@@ -255,10 +292,10 @@ var item = {
     description: 'This is a great GPS.',
     Cond: 3,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 70,
     Get_It_Now_Price: 99,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
     Lister_Name: 'user1',
     Starting_Bid: 50
@@ -277,10 +314,10 @@ item = {
     description: 'Point and shoot!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 60,
     Get_It_Now_Price: 80,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
     Lister_Name: 'user1',
     Starting_Bid: 40
@@ -295,10 +332,10 @@ item = {
     description: 'New and in box!',
     Cond: 4,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 1800,
     Get_It_Now_Price: 2000,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
     Lister_Name: 'user2',
     Starting_Bid: 1500
@@ -313,10 +350,10 @@ item = {
     description: 'Delicious Danish Art',
     Cond: 3,
     Returnable: true,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 15,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Art',
     Lister_Name: 'user3',
     Starting_Bid: 10
@@ -331,10 +368,10 @@ item = {
     description: 'Learn SQL really fast!',
     Cond: 1,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 12,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Books',
     Lister_Name: 'admin1',
     Starting_Bid: 5
@@ -349,10 +386,10 @@ item = {
     description: 'Learn SQL even faster!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 8,
     Get_It_Now_Price: 10,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Books',
     Lister_Name: 'admin2',
     Starting_Bid: 5
@@ -367,10 +404,10 @@ item = {
     description: 'Works on any door frame.',
     Cond: 4,
     Returnable: true,
-    Auction_Start_Datetime: new Date().toISOString(),
+    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 25,
     Get_It_Now_Price: 40,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString(),
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     Category: 'Sporting Goods',
     Lister_Name: 'user6',
     Starting_Bid: 20
@@ -385,7 +422,7 @@ logger.debug('Success: items are added');
 newDate = new Date();
 
 var bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 1,
     Bid_Amount: 50
@@ -398,7 +435,7 @@ connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid
 logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 55
@@ -409,7 +446,7 @@ logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1
 
 
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 1,
     Bid_Amount: 75
@@ -420,7 +457,7 @@ logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1
 
 
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.4 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.4 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 85
@@ -431,7 +468,7 @@ logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1
 
 
 var bid2 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user6',
     itemId: 2,
     Bid_Amount: 80
@@ -442,7 +479,7 @@ logger.debug('A new bidding (' + bid2.bidDate + '|' + bid2.username + '|' + bid2
 
 
 var bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 3,
     Bid_Amount: 1500
@@ -453,7 +490,7 @@ logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3
 
 
 bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user3',
     itemId: 3,
     Bid_Amount: 1501
@@ -463,7 +500,7 @@ connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid
 logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
 
 bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 3,
     Bid_Amount: 1795
@@ -475,7 +512,7 @@ connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid
 
 
 var bid7 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 7,
     Bid_Amount: 20
@@ -485,7 +522,7 @@ connection.query(insertQuery,[bid7.bidDate, bid7.username, bid7.itemId, bid7.Bid
 logger.debug('A new bidding (' + bid7.bidDate + '|' + bid7.username + '|' + bid7.itemId +') has been inserted.');
 
 bid7 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user2',
     itemId: 7,
     Bid_Amount: 25
@@ -500,7 +537,7 @@ logger.debug('Success: bids are added');
 // RATING table
 newDate = new Date();
 var rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user2',
     itemId: 1,
     numberOfStars: 5,
@@ -514,7 +551,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user3',
     itemId: 1,
     numberOfStars: 2,
@@ -528,7 +565,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 1,
     numberOfStars: 4,
@@ -542,7 +579,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 4,
     numberOfStars: 1,
@@ -556,7 +593,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'admin1',
     itemId: 6,
     numberOfStars: 1,
@@ -570,7 +607,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 6,
     numberOfStars: 3,
@@ -584,7 +621,7 @@ connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rat
 
 
 rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString(),
+    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
     username: 'user2',
     itemId: 6,
     numberOfStars: 5,

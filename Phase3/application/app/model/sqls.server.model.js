@@ -49,25 +49,35 @@ exports.item = function(queryId) {
       break;
     case 4:  // search ITEM(s) by multiple conditions
             // conditions are managed in the business logic
-      return "SELECT i.Item_ID, i.Item_Name, b.Current_Bid, b2.Username, i.Get_It_Now_Price, i.Auction_End_Datetime \
-              FROM ITEM i LEFT JOIN \
-                (SELECT Item_ID, MAX(Bid_Amount) Current_Bid FROM BID GROUP BY Item_ID) b \
-                ON i.Item_ID = b.Item_ID LEFT JOIN \
-                BID b2 ON b.Item_ID = b2.Item_ID AND b.Current_Bid = b2.Bid_Amount \
-              WHERE ? \
-              ORDER BY i.Auction_End_Datetime";
+
+      return "SELECT Item_ID, Item_Name, Highest_Bid as Current_Bid, Current_Bidder as Username, Get_It_Now_Price, Auction_End_Datetime   \
+              FROM   (SELECT  ITEM.Item_ID, ITEM.Item_Name, Q.Highest_Bid, Q.Current_Bidder, ITEM.Get_It_Now_Price, ITEM.Auction_End_Datetime, \
+                              ITEM.Cond, ITEM.Description, ITEM.Category\
+                      FROM ITEM LEFT JOIN (SELECT Item_ID, Bid_Amount AS Highest_Bid, Username AS Current_Bidder\
+                                           FROM   BID\
+                                           WHERE (Item_ID, Bid_Amount) IN (SELECT  Item_ID, MAX(Bid_Amount) AS MaxPrice \
+                                                                           FROM BID\
+                                                                           GROUP BY  Item_ID)) AS Q ON Q.Item_ID = ITEM.Item_ID) AS P\
+                                                                           WHERE NOW() < P.Auction_End_Datetime AND ? <= P.Cond \
+                                                                                 AND (P.Highest_Bid IS NULL OR  ( ? > P.Highest_Bid AND ? < P.Highest_Bid))\
+                                                                                 AND (P.Item_Name LIKE ? OR P.Description LIKE ?)\
+                                                                                 AND (? = P.Category OR ? = '')\
+              ORDER BY P.Auction_End_Datetime";
       break;
     case 5:  // search ITEM(s), of which auction end dates are passed
-      return "SELECT i.Item_ID, i.Item_Name, b.Current_Bid, b2.Username, i.Get_It_Now_Price, i.Auction_End_Datetime \
-              FROM ITEM i LEFT JOIN \
-                (SELECT BID.Item_ID, ITEM.Min_Sale_Price, MAX(Bid_Amount) Current_Bid \
-	               FROM BID JOIN ITEM ON BID.Item_ID = ITEM.Item_ID \
-	               GROUP BY BID.Item_ID \
-	               HAVING MAX(Bid_Amount) >= ITEM.Min_Sale_Price) b \
-                ON i.Item_ID = b.Item_ID LEFT JOIN \
-                BID b2 ON b.Item_ID = b2.Item_ID AND b.Current_Bid = b2.Bid_Amount \
-              WHERE i.Auction_End_Datetime < NOW() AND i.Lister_Name = ? \
-              ORDER BY i.Auction_End_Datetime DESC";
+      return "SELECT Item_ID, Item_Name, COALESCE(Highest_Bid, '-') AS Current_Bid, COALESCE(Current_Bidder, '-') AS Username, Get_It_Now_Price, Auction_End_Datetime \
+              FROM (SELECT ITEM.Item_ID, ITEM.Item_Name, Q.Highest_Bid, Q.Current_Bidder,\
+                           ITEM.Auction_End_Datetime, ITEM.Min_Sale_Price, ITEM.Get_It_Now_Price\
+                    FROM   ITEM LEFT JOIN (SELECT DISTINCT BID.Item_ID, Bid_Amount AS Highest_Bid, Username AS Current_Bidder\
+                                           FROM   BID, ITEM\
+                                           WHERE  ITEM.Min_Sale_Price <= BID.Bid_Amount \
+                                                  AND BID.Item_ID = ITEM.Item_ID \
+                                                  AND (BID.Item_ID, Bid_Amount) \
+                                                  IN (SELECT BID.Item_ID, MAX(Bid_Amount) AS MaxPrice\
+                                                      FROM  BID GROUP BY  BID.Item_ID)) AS Q \
+                                                      ON Q.Item_ID = ITEM.Item_ID) AS P\
+              WHERE NOW() > P.Auction_End_Datetime\
+              ORDER BY P.Auction_End_Datetime DESC";
       break;
     case 6:  // update the item's Auction_End_Datetime to now
       return "UPDATE ITEM \
@@ -102,7 +112,18 @@ exports.bid = function(queryId) {
             FROM ITEM \
             WHERE Item_ID = ?";
       break;
-    
+
+      case 3: //when a new BID is entered without get it now
+       return"INSERT INTO BID (`Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount`) \
+                          VALUES (NOW(), ?, ?, ?)";
+       /* this part will be in bids.server.model
+
+       db.query(sqls.bid(3), [item.username, item.itemid, item.bidamount] function (err, rows) {
+          if err return done(err)
+          done(null,true)
+      })*/
+
+
     default:
       return "";
   }
@@ -133,25 +154,30 @@ exports.report = function(queryId) {
     
   switch (queryId) {
     case 1:  // get all categories group by total items, min price, max price, and average price
-      return "SELECT i.Category, COUNT(*) Sum_Items, COALESCE(MIN(b.Bid_Amount), 0) Min_Price, \
-                COALESCE(MAX(b.Bid_Amount), 0) Max_Price, COALESCE(AVG(b.Bid_Amount), 0) Avg_Price \
-              FROM ITEM i LEFT JOIN BID b \
-                ON i.Item_ID = b.Item_ID \
-              GROUP BY i.Category \
-              ORDER BY i.Category";
+      return "SELECT   Category, Count(*) AS Sum_Items, MIN(Get_It_Now_Price) AS Min_Price, \
+                        MAX(Get_It_Now_Price) AS Max_Price, \
+                        AVG(Get_It_Now_Price) AS Avg_Price\
+              FROM     ITEM\
+              GROUP BY Category";
       break;
     case 2:  // get all users group by listed items, sold items, purchased items, rated items
       // TODO: SQL needs to be revised !!!!!!!!!*************************
-      return "SELECT i.Lister_Name Username, COUNT(i.Item_ID) Listed, COUNT(s.Item_ID) Sold, \
-                COUNT(s.Item_ID) Purchased, COUNT(s.Item_ID) Rated \
-              FROM ITEM i LEFT JOIN \
-                  (SELECT Item_ID \
-                  FROM ITEM \
-                  WHERE Auction_End_Datetime < NOW() ) s \
-                ON i.Item_ID = s.Item_ID \
-              GROUP BY i.Lister_Name \
-              ORDER BY COUNT(i.Item_ID) DESC";
-      break;
+        return"SELECT * FROM ((SELECT * FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
+                              UNION\
+                              SELECT * FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS A1\
+                        NATURAL LEFT OUTER JOIN\
+                              (SELECT * FROM LISTED NATURAL LEFT OUTER JOIN RATED\
+                               UNION\
+                               SELECT * FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS A2)\
+               UNION\
+               SELECT * FROM ((SELECT * FROM LISTED NATURAL LEFT OUTER JOIN RATED\
+                               UNION\
+                               SELECT * FROM RATED NATURAL LEFT OUTER JOIN LISTED) AS B1\
+                        NATURAL LEFT OUTER JOIN\
+                               (SELECT * FROM SOLD NATURAL LEFT OUTER JOIN PURCHASED\
+                                UNION\
+                                SELECT * FROM PURCHASED NATURAL LEFT OUTER JOIN SOLD) AS B2)";
+        break;
     default:
       return "";
   }
