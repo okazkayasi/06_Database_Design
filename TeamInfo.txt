@@ -1,0 +1,7 @@
+SQL implementations are in:
+
+Phase3/application/scripts/create_database -> Create tables and first insertions
+Phase3/application/model/sqls.server.model -> SQL queries related to USER, ITEM, and BID
+Phase3/application/model/bids.server.model -> More SQL queries related to BID
+
+there are few SQL queries in other files but they are mainly simple SELECT queries for displaying the forms.
