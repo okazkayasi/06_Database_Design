@@ -116,12 +116,7 @@ exports.bid = function(queryId) {
       case 3: //when a new BID is entered without get it now
        return"INSERT INTO BID (`Bid_Datetime`, `Username`, `Item_ID`, `Bid_Amount`) \
                           VALUES (NOW(), ?, ?, ?)";
-       /* this part will be in bids.server.model
 
-       db.query(sqls.bid(3), [item.username, item.itemid, item.bidamount] function (err, rows) {
-          if err return done(err)
-          done(null,true)
-      })*/
 
 
     default:

@@ -250,19 +250,21 @@ logger.debug('Success: categories are added');
 
 
 // ITEM table
-var newDate = new Date();
-var addedDays = 3;
+
+var newDate = new Date(2018, 2, 16, 03, 15, 10, 0);
+var newDate1 = new Date(2018, 2, 31, 12, 22, 0, 0);
+var addedDays = 7;
 var item = {
     itemname: 'Garmin GPS',
     description: 'This is a great GPS.',
     Cond: 3,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 70,
     Get_It_Now_Price: 99,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
-    Lister_Name: 'user1',
+    Lister_Name: 'admin2',
     Starting_Bid: 50
 };
 
@@ -272,17 +274,20 @@ insertQuery = "INSERT INTO ITEM ( \
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
-addedDays = 5;
+
+
+var newDate = new Date(2018, 2, 30, 03, 15, 0, 0);
+var newDate1 = new Date(2018, 3, 1, 14, 14, 0, 0);
+addedDays = 3;
 item = {
     itemname: 'Canon Powershot',
     description: 'Point and shoot!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 60,
     Get_It_Now_Price: 80,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
     Lister_Name: 'user1',
     Starting_Bid: 40
@@ -290,17 +295,18 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
+var newDate = new Date(2018, 2, 30, 03, 15, 4, 0);
+var newDate1 = new Date(2018, 3, 5, 9, 19, 0, 0);
 addedDays = 3;
 item = {
     itemname: 'Nikon D3',
     description: 'New and in box!',
     Cond: 4,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 1800,
     Get_It_Now_Price: 2000,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Electronics',
     Lister_Name: 'user2',
     Starting_Bid: 1500
@@ -308,17 +314,18 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
-addedDays = 7;
+var newDate = new Date(2018, 2, 30, 03, 15, 2, 0);
+var newDate1 = new Date(2018, 3, 5, 15, 23, 0, 0);
+addedDays = 5;
 item = {
     itemname: 'Danish Art Book',
     description: 'Delicious Danish Art',
     Cond: 3,
     Returnable: true,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 15,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Art',
     Lister_Name: 'user3',
     Starting_Bid: 10
@@ -326,17 +333,18 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
-addedDays = 10;
+var newDate = new Date(2018, 2, 30, 03, 15, 1, 0);
+var newDate1 = new Date(2018, 3, 5, 16, 48, 0, 0);
+addedDays = 3;
 item = {
     itemname: 'SQL in 10 Minutes',
     description: 'Learn SQL really fast!',
     Cond: 1,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 10,
     Get_It_Now_Price: 12,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Books',
     Lister_Name: 'admin1',
     Starting_Bid: 5
@@ -344,17 +352,18 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
-addedDays = 6;
+var newDate = new Date(2018, 2, 30, 03, 15, 1, 0);
+var newDate1 = new Date(2018, 3, 8, 10, 11, 0, 0);
+addedDays = 7;
 item = {
     itemname: 'SQL in 8 Minutes',
     description: 'Learn SQL even faster!',
     Cond: 2,
     Returnable: false,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 8,
     Get_It_Now_Price: 10,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Books',
     Lister_Name: 'admin2',
     Starting_Bid: 5
@@ -362,17 +371,18 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
-newDate = new Date();
-addedDays = 4;
+var newDate = new Date(2018, 2, 30, 03, 15, 1, 0);
+var newDate1 = new Date(2018, 3, 9, 22, 9, 0, 0);
+addedDays = 8;
 item = {
     itemname: 'Pull-up Bar',
     description: 'Works on any door frame.',
     Cond: 4,
     Returnable: true,
-    Auction_Start_Datetime: new Date().toISOString().substring(0,19).replace('T',' '),
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
     Min_Sale_Price: 25,
     Get_It_Now_Price: 40,
-    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Auction_End_Datetime: newDate1.toISOString().substring(0,19).replace('T',' '),
     Category: 'Sporting Goods',
     Lister_Name: 'user6',
     Starting_Bid: 20
@@ -380,17 +390,78 @@ item = {
 
 connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
 
+
+var newDate = new Date(2018, 3, 16, 03, 15, 0, 0);
+var addedDays = 7;
+var item = {
+    itemname: 'Garmin GPS',
+    description: 'Regular GPS.',
+    Cond: 2,
+    Returnable: false,
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
+    Min_Sale_Price: 50,
+    Get_It_Now_Price: 75,
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Category: 'Electronics',
+    Lister_Name: 'admin2',
+    Starting_Bid: 25
+};
+
+insertQuery = "INSERT INTO ITEM ( \
+  `Item_Name`, `Description`, `Cond`, `Returnable`, `Auction_Start_Datetime`, `Min_Sale_Price`, \
+  `Get_It_Now_Price`, `Auction_End_Datetime`, `Category`, `Lister_Name`, `Starting_Bid` ) values (?,?,?,?,?,?,?,?,?,?,?)";
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
+
+
+newDate = new Date(2018,3,16,1,1,0,0);
+addedDays = 7;
+item = {
+    itemname: 'MacBook Pro',
+    description: 'Looks good',
+    Cond: 3,
+    Returnable: false,
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
+    Min_Sale_Price: 1500,
+    Get_It_Now_Price: 0,
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Category: 'Electronics',
+    Lister_Name: 'user4',
+    Starting_Bid: 1000
+};
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
+
+newDate = new Date(2018,3,16,6,0,0,0);
+addedDays = 7;
+item = {
+    itemname: 'Microsoft Surface',
+    description: 'Keyboard sucks',
+    Cond: 3,
+    Returnable: false,
+    Auction_Start_Datetime: newDate.toISOString().substring(0,19).replace('T',' '),
+    Min_Sale_Price: 750,
+    Get_It_Now_Price: 899,
+    Auction_End_Datetime: new Date(newDate.setTime( newDate.getTime() + addedDays * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    Category: 'Electronics',
+    Lister_Name: 'user5',
+    Starting_Bid: 500
+};
+
+connection.query(insertQuery,[item.itemname, item.description, item.Cond, item.Returnable, item.Auction_Start_Datetime, item.Min_Sale_Price, item.Get_It_Now_Price, item.Auction_End_Datetime, item.Category, item.Lister_Name, item.Starting_Bid]);
+
+
 logger.debug('Success: items are added');
 
 
 // BID table
-newDate = new Date();
+var newDate = new Date(2018, 3, 17, 03, 15, 0, 0);
 
 var bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
-    itemId: 1,
-    Bid_Amount: 50
+    itemId: 8,
+    Bid_Amount: 30
 };
 
 insertQuery = "INSERT INTO BID ( \
@@ -399,8 +470,66 @@ insertQuery = "INSERT INTO BID ( \
 connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
 logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
+
+var newDate = new Date(2018, 3, 18, 03, 15, 0, 0);
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
+    username: 'user5',
+    itemId: 8,
+    Bid_Amount: 31
+};
+
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
+
+var newDate = new Date(2018, 3, 19, 03, 15, 0, 0);
+bid1 = {
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
+    username: 'user3',
+    itemId: 8,
+    Bid_Amount: 33
+};
+
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
+
+var newDate = new Date(2018, 3, 20, 03, 15, 0, 0);
+bid1 = {
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
+    username: 'user4',
+    itemId: 8,
+    Bid_Amount: 40
+};
+
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
+
+
+var newDate = new Date(2018, 3, 21, 03, 15, 0, 0);
+bid1 = {
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
+    username: 'user6',
+    itemId: 8,
+    Bid_Amount: 45
+};
+
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
+
+newDate = new Date(2018,2,30,14,53,0,0);
+bid1 = {
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
+    username: 'user4',
+    itemId: 1,
+    Bid_Amount: 50
+};
+
+connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
+logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
+
+newDate = new Date(2018,2,30,16,45,0,0);
+bid1 = {
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 55
@@ -409,9 +538,9 @@ bid1 = {
 connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
 logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
-
+newDate = new Date(2018,2,30,19,28,0,0);
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 1,
     Bid_Amount: 75
@@ -420,9 +549,9 @@ bid1 = {
 connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid_Amount]);
 logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
-
+newDate = new Date(2018,2,31,10,0,0,0);
 bid1 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.4 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user5',
     itemId: 1,
     Bid_Amount: 85
@@ -432,8 +561,10 @@ connection.query(insertQuery,[bid1.bidDate, bid1.username, bid1.itemId, bid1.Bid
 logger.debug('A new bidding (' + bid1.bidDate + '|' + bid1.username + '|' + bid1.itemId +') has been inserted.');
 
 
+
+newDate = new Date(2018,3,1,13,55,0,0);
 var bid2 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user6',
     itemId: 2,
     Bid_Amount: 80
@@ -442,9 +573,9 @@ var bid2 = {
 connection.query(insertQuery,[bid2.bidDate, bid2.username, bid2.itemId, bid2.Bid_Amount]);
 logger.debug('A new bidding (' + bid2.bidDate + '|' + bid2.username + '|' + bid2.itemId +') has been inserted.');
 
-
+newDate = new Date(2018,3,4,8,37,0,0);
 var bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 3,
     Bid_Amount: 1500
@@ -453,9 +584,9 @@ var bid3 = {
 connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid_Amount]);
 logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
 
-
+newDate = new Date(2018,3,4,9,15,0,0);
 bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user3',
     itemId: 3,
     Bid_Amount: 1501
@@ -464,8 +595,10 @@ bid3 = {
 connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid_Amount]);
 logger.debug('A new bidding (' + bid3.bidDate + '|' + bid3.username + '|' + bid3.itemId +') has been inserted.');
 
+
+newDate = new Date(2018,3,4,12,27,0,0);
 bid3 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.3 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user1',
     itemId: 3,
     Bid_Amount: 1795
@@ -476,8 +609,9 @@ connection.query(insertQuery,[bid3.bidDate, bid3.username, bid3.itemId, bid3.Bid
 });
 
 
+newDate = new Date(2018,3,8,20,20,0,0);
 var bid7 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user4',
     itemId: 7,
     Bid_Amount: 20
@@ -486,8 +620,10 @@ var bid7 = {
 connection.query(insertQuery,[bid7.bidDate, bid7.username, bid7.itemId, bid7.Bid_Amount]);
 logger.debug('A new bidding (' + bid7.bidDate + '|' + bid7.username + '|' + bid7.itemId +') has been inserted.');
 
+
+newDate = new Date(2018,3,9,21,15,0,0);
 bid7 = {
-    bidDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    bidDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user2',
     itemId: 7,
     Bid_Amount: 25
@@ -500,9 +636,9 @@ logger.debug('Success: bids are added');
 
 
 // RATING table
-newDate = new Date();
+newDate = new Date(2018,2,30,17,00,0,0);
 var rate = {
-    rateDate: new Date(newDate.setTime( newDate.getTime() + 0.1 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
+    rateDate: newDate.toISOString().substring(0,19).replace('T',' '),
     username: 'user2',
     itemId: 1,
     numberOfStars: 5,
@@ -514,6 +650,7 @@ var insertQueryRate = "INSERT INTO RATING ( \
 
 connection.query(insertQueryRate,[rate.rateDate, rate.username, rate.itemId, rate.numberOfStars, rate.comment]);
 
+newDate = new Date()
 
 rate = {
     rateDate: new Date(newDate.setTime( newDate.getTime() + 0.2 * 86400000 )).toISOString().substring(0,19).replace('T',' '),
@@ -603,12 +740,12 @@ logger.debug('Success: rates are added');
 
 
 
-connection.query("CREATE VIEW LISTED AS \
-                  SELECT Lister_Name, COUNT(*) AS Listed \
-                  FROM ITEM \
-                GROUP BY Lister_Name");
+connection.query("CREATE VIEW LISTED AS\
+                  SELECT Lister_Name AS Username, Count(*) AS Listed \
+                  FROM ITEM\
+                  GROUP BY Lister_Name");
 
-/*
+
 connection.query("CREATE VIEW SOLD AS \
                   SELECT Lister_Name AS Username, COUNT(Item_ID) AS Sold\
                   FROM (SELECT DISTINCT ITEM.Lister_Name, ITEM.Item_ID\
@@ -639,7 +776,7 @@ connection.query("CREATE VIEW RATED AS\
                             FROM   RATING, ITEM\
                             WHERE  RATING.Item_ID = ITEM.Item_ID) AS P\
                   GROUP BY Username");
-*/
+
 logger.debug('Success: views are added');
 
 connection.end();

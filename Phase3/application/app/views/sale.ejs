@@ -45,8 +45,8 @@
                     <% } %>
                     
                     <div class="register-box-body">                   
-                    <!-- form start -->   
-                    <form class="form-horizontal" action="/item/auction" method="post">  
+                    <!-- form start -->
+                    <form class="form-horizontal" action="/item/bid-item?id=<%=itemId%>" method="post">
                         <input type="hidden" id="startingBidPrice" value="<%=startingBid%>">
                       <div class="box-body">
                         <div class="form-group has-feedback">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Description</label>
-                          <div class="col-sm-9"><%=description%> &nbsp; <%=listerName%>|<%=userid%><% if (listerName != userid) {%><button type="button" onClick="window.location.href='/item/auction?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>Edit Description</button><% } %></div>
+                          <div class="col-sm-9"><%=description%> &nbsp; <% if (listerName == userid) {%><button type="button" onClick="window.location.href='/item/auction?id=<%=itemId%>'" class="btn btn-default" id='rateBtn'>Edit Description</button><% } %></div>
                         </div>
                         <div class="form-group has-feedback">
                           <label class="col-sm-3 control-label">Category</label>
@@ -90,7 +90,7 @@
                           <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" class="form-control" id="myBidPrice" placeholder="minimum bid is $<%=startingBid%>" name="myBidPrice" onkeyup="checkBidPrice('myBidPrice','startingBidPrice','confirmMessage','bidBtn'); return false;">
+                                <input type="text" class="form-control" id="myBidPrice" placeholder="minimum bid is $<%=startingBid%>" name="myBidPrice" value="" onkeyup="checkBidPrice('myBidPrice','startingBidPrice','confirmMessage','bidBtn'); return false;">
                             </div>
                             <span id="confirmMessage" class="confirmMessage"></span>
                           </div>
@@ -100,7 +100,8 @@
                       <!-- /.box-body -->
                       <div class="box-footer">
                         <button type="button" onClick="window.location.href=document.referrer" class="btn btn-default">Go Back</button>
-                        <button type="submit" class="btn btn-info pull-right" id='bidBtn' disabled="true">Bid On This Item</button>
+                        <!--<button type="button" class="btn btn-info pull-right" id='bidBtn' onClick="window.location.href='/item/bid-item?id=<%=itemId%>'" >Bid On This Item</button>-->
+                        <button type="submit" class="btn btn-info pull-right" id='bidBtn'>Bid On This Item</button>
                       </div>
                       <!-- /.box-footer -->
                       </form>
@@ -159,7 +160,7 @@
         var badColor = "#ff6666";
         //Compare the values in the bidding price field 
         //and the confirmation field
-        if(bidPrice.value >= startingBidPrice.value){
+        if(Number(bidPrice.value) >= Number(startingBidPrice.value)){
             //The bidding price is valid.
             //Set the color to the good color and inform
             //the user that they have entered the valid price 

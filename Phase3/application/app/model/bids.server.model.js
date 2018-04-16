@@ -54,4 +54,15 @@ exports.insert = function(req, item, done) {
     }
   })
   
-}
+};
+
+exports.newBid = function (req,item,done) {
+    //logger.debug('SQL = ' + sqls.item(7));
+    logger.debug('SQL111 = ' + sqls.bid(3));
+    // this part will be in bids.server.model
+    logger.debuG('bid = ' + JSON.stringify(item));
+    db.query(sqls.bid(3), [item.username, item.itemid, item.bidamount], function (err, rows) {
+      if (err) return done(err)
+      done(null,true)
+    });
+};

@@ -4,6 +4,10 @@
 var config = require('../../config/config'),
     items = require('../model/items.server.model'),
     bids = require('../model/bids.server.model'),
+    mysql = require('mysql'),
+    dbconfig = require('../../config/mysql'),
+    sqls = require('../model/sqls.server.model'),
+    db = mysql.createConnection(dbconfig.connection),
     logger = require('../../config/logger');
 
 // =====================================
@@ -370,6 +374,30 @@ exports.getItNow = function(req, res, done) {
         });
     } 
 	
+};
+
+exports.bidOnItem = function(req, res, done){
+    req.session.returnTo = req.url;
+    logger.debug(JSON.stringify(req.body));
+    if (req.query.id != ''){
+        var newDate = new Date();
+        logger.debug("BURADAYIZ");
+        console.log(JSON.stringify(req.body));
+        var item = {
+            itemid: req.query.id,
+            username: req.user.username,
+            bidamount: req.body.myBidPrice
+        };
+        logger.debug("bid amount = " + item.bidamount);
+        db.query(sqls.bid(3), [item.username, item.itemid, item.bidamount], function (err, rows) {
+            if (err) return done(err)
+            done(null,true)
+        });
+        res.status(301).redirect('/item/list');
+
+
+
+    }
 };
 
 

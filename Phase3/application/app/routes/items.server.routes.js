@@ -35,12 +35,15 @@ module.exports = function(app, passport) {
 
   app.route('/item/get-it-now')
       .get(utils.ensureAuthenticated, items.getItNow);  // update the item and add a bid to close the auction for this item
-  
+
+  app.route('/item/bid-item')
+      .post(utils.ensureAuthenticated, items.bidOnItem);
+
   app.route('/item/sale-rate')
       .get(utils.ensureAuthenticated, items.rate);  // show the item rating form 
   
   app.route('/item/ajax/search')
-      .post(utils.ensureAuthenticated, items.getItems);  // retrieve the search result
+      .get(utils.ensureAuthenticated, items.getItems);  // retrieve the search result
 
   // =====================================
   // ITEM DETAIL =========================
